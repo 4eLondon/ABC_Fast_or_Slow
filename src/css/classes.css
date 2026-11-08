@@ -77,10 +77,21 @@
     box-shadow: none;
 }
 
-.hover-red { --hov: var(--red); }
-.hover-yel { --hov: var(--yel); }
-.hover-grn { --hov: var(--grn); }
-.hover-blue { --hov: var(--blue); }
+.hover-red {
+    --hov: var(--red);
+}
+
+.hover-yel {
+    --hov: var(--yel);
+}
+
+.hover-grn {
+    --hov: var(--grn);
+}
+
+.hover-blue {
+    --hov: var(--blue);
+}
 
 .input-classic {
     border: solid 0.2rem var(--wht);
@@ -94,16 +105,54 @@
 
 
 /* [ Colours: crates ] */
-.bg-wht { background-color: var(--wht); color: var(--ink); }
-.bg-yel { background-color: var(--yel); color: var(--ink); }
-.bg-red { background-color: var(--red); color: var(--wht); }
-.bg-grn { background-color: var(--grn); color: var(--wht); }
-.bg-teal { background-color: var(--teal); color: var(--wht); }
-.bg-blue { background-color: var(--blue); color: var(--wht); }
+.bg-wht {
+    background-color: var(--wht);
+    color: var(--ink);
+}
+
+.bg-yel {
+    background-color: var(--yel);
+    color: var(--ink);
+}
+
+.bg-red {
+    background-color: var(--red);
+    color: var(--wht);
+}
+
+.bg-grn {
+    background-color: var(--grn);
+    color: var(--wht);
+}
+
+.bg-teal {
+    background-color: var(--teal);
+    color: var(--wht);
+}
+
+.bg-blue {
+    background-color: var(--blue);
+    color: var(--wht);
+}
 
 /* [ Colours: cards (--c strip colour, --t strip text) ] */
-.c-red { --c: var(--red); }
-.c-yel { --c: var(--yel); --t: var(--ink); }
-.c-grn { --c: var(--grn); }
-.c-blue { --c: var(--blue); }
-.c-plum { --c: var(--plum); }
+.c-red {
+    --c: var(--red);
+}
+
+.c-yel {
+    --c: var(--yel);
+    --t: var(--ink);
+}
+
+.c-grn {
+    --c: var(--grn);
+}
+
+.c-blue {
+    --c: var(--blue);
+}
+
+.c-plum {
+    --c: var(--plum);
+}

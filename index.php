@@ -52,7 +52,9 @@ $ex = ['Mike', 'Mia', 'Mug', 'Mango', 'Mexico'];
                 </ul>
             </div>
             <div id="guide_cards">
-                <?php $lw = '7rem'; $let = 'M'; include 'includes/lcard.php'; ?>
+                <?php $lw = '7rem';
+                $let = 'M';
+                include 'includes/lcard.php'; ?>
                 <?php foreach ($cats as $n => $c) { ?>
                     <div class="card mini c-<?= $c ?>">
                         <span class="flex-col ele-center-hori card-strip"><?= $n[0] ?></span>

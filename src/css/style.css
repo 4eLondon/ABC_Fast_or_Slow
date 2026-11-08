@@ -33,13 +33,13 @@
 /* the supplied fonts are demo versions: digits show a watermark, so digits use a system font */
 @font-face {
     font-family: a;
-    src: url(fonts/Antipasto_Regular.ttf);
+    src: url(../../assets/fonts/Antipasto_Regular.ttf);
     unicode-range: U+0000-002F, U+003A-FFFF;
 }
 
 @font-face {
     font-family: aa;
-    src: url(fonts/Aristotelica_Display.ttf);
+    src: url(../../assets/fonts/Aristotelica_Display.ttf);
     unicode-range: U+0000-002F, U+003A-FFFF;
 }
 
@@ -521,10 +521,21 @@ a.crate:hover {
 }
 
 @media (min-width: 900px) {
-    #answers .card:nth-child(1) { transform: rotate(-6deg) translateY(1rem); }
-    #answers .card:nth-child(2) { transform: rotate(-3deg) translateY(0.3rem); }
-    #answers .card:nth-child(4) { transform: rotate(3deg) translateY(0.3rem); }
-    #answers .card:nth-child(5) { transform: rotate(6deg) translateY(1rem); }
+    #answers .card:nth-child(1) {
+        transform: rotate(-6deg) translateY(1rem);
+    }
+
+    #answers .card:nth-child(2) {
+        transform: rotate(-3deg) translateY(0.3rem);
+    }
+
+    #answers .card:nth-child(4) {
+        transform: rotate(3deg) translateY(0.3rem);
+    }
+
+    #answers .card:nth-child(5) {
+        transform: rotate(6deg) translateY(1rem);
+    }
 }
 
 
@@ -563,7 +574,11 @@ a.crate:hover {
         min-height: 100dvh;
     }
 
-    #lobby_main, #game_main, #guide, #hero_buttons, #answers {
+    #lobby_main,
+    #game_main,
+    #guide,
+    #hero_buttons,
+    #answers {
         flex-wrap: wrap;
     }
 }

@@ -50,7 +50,7 @@ $pc = ['red', 'yel', 'grn', 'blue'];
                 <?php } ?>
             </div>
 
-            <?php include 'wheel.php'; ?>
+            <?php include '../includes/wheel.php'; ?>
 
             <div class="flex-col ele-center-hori g-1" id="side">
                 <?php $lw = '10rem'; $let = '?'; include '../includes/lcard.php'; ?>
@@ -70,7 +70,7 @@ $pc = ['red', 'yel', 'grn', 'blue'];
 
         <!-- [ Navigation ] -->
         <section class="flex-row g-1" id="lobby_buttons">
-            <a class="btn-classic hover-red" href="index.php">Back</a>
+            <a class="btn-classic hover-red" href="../index.php">Back</a>
             <a class="btn-classic hover-grn" id="go" href="game.php?m=<?= $m ?>&l=A">Start game</a>
         </section>
 

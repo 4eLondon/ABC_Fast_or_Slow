@@ -55,7 +55,7 @@ $cats = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'P
                 <span class="chip">Player 3 0</span>
             </div>
             <div class="flex-row g-1">
-                <a class="btn-classic hover-red" href="index.php">Leave</a>
+                <a class="btn-classic hover-red" href="../index.php">Leave</a>
                 <a class="btn-classic hover-grn" href="#spin">Submit answers</a>
             </div>
         </section>

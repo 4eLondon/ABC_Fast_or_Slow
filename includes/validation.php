@@ -36,4 +36,33 @@ function validate_answer(string $answer, string $roundLetter): bool
     return true;
 }
 
+
+// Check whether a player is allowed to vote on an answer
+function can_vote_on_answer(
+    int $voterId,
+    int $answerOwnerId,
+    string $answer,
+    string $roundLetter,
+    string $roundPhase
+): bool {
+
+    // Voting is only allowed during the review phase
+    if ($roundPhase !== "review") {
+        return false;
+    }
+
+    // Players cannot vote on their own answers
+    if ($voterId === $answerOwnerId) {
+        return false;
+    }
+
+    // The answer must pass validation
+    if (!validate_answer($answer, $roundLetter)) {
+        return false;
+    }
+
+    return true;
+}
+
+
 ?>

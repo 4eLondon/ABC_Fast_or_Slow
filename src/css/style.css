@@ -292,6 +292,43 @@ a.crate:hover {
     justify-content: center;
 }
 
+.room-entry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    width: min(100%, 56rem);
+    margin: auto;
+}
+
+.room-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 2rem;
+    border-radius: 0.8rem;
+}
+
+.room-entry h2 {
+    margin-bottom: 0.4rem;
+    font-size: 2rem;
+}
+
+.room-entry .input-classic {
+    width: 100%;
+}
+
+.form-error {
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--red);
+    text-align: center;
+}
+
+.waiting-note {
+    align-self: center;
+    padding: 1rem;
+}
+
 
 /* [ Cards: players, answers and guide examples ] */
 .card {
@@ -578,7 +615,12 @@ a.crate:hover {
     #game_main,
     #guide,
     #hero_buttons,
+    .room-entry-grid,
     #answers {
         flex-wrap: wrap;
+    }
+
+    .room-entry-grid {
+        grid-template-columns: 1fr;
     }
 }

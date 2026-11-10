@@ -1,8 +1,36 @@
 <?php
+session_start();
+require_once '../includes/rooms.php';
+
 $title = "Game";
 $let = $_GET['l'] ?? 'A';
 $let = (strlen($let) == 1 && ctype_upper($let)) ? $let : 'A';
 $cats = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'Place' => 'plum'];
+$room_code = strtoupper(trim($_GET['room'] ?? ''));
+$room = null;
+if ($room_code != '') {
+    $rooms = load_rooms();
+    if (isset($rooms[$room_code])) {
+        $room = $rooms[$room_code];
+    }
+
+    $is_player = false;
+    if ($room) {
+        foreach ($room['players'] as $player) {
+            if ($player['id'] == session_id()) {
+                $is_player = true;
+                break;
+            }
+        }
+    }
+    if (!$room || !$is_player || $room['status'] != 'started') {
+        header('Location: lobby.php?m=multi');
+        exit;
+    }
+} elseif (($_GET['m'] ?? '') == 'multi') {
+    header('Location: lobby.php?m=multi');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +50,7 @@ $cats = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'P
 
         <!-- [ Round and timer ] -->
         <section class="flex-row" id="game_top">
-            <span>Round 1 of 5</span>
+            <span>Round 1 of <?= $room ? (int) $room['settings']['rounds'] : 5 ?></span>
             <span>0:30</span>
         </section>
 
@@ -50,12 +78,18 @@ $cats = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'P
         <!-- [ Scores and navigation ] -->
         <section class="flex-row" id="game_bottom">
             <div class="flex-row g-1">
-                <span class="chip">You 0</span>
-                <span class="chip">Player 2 0</span>
-                <span class="chip">Player 3 0</span>
+                <?php if ($room) { ?>
+                    <?php foreach ($room['players'] as $player) { ?>
+                        <span class="chip"><?= escape_html($player['name']) ?> 0</span>
+                    <?php } ?>
+                <?php } else { ?>
+                    <span class="chip">You 0</span>
+                    <span class="chip">Player 2 0</span>
+                    <span class="chip">Player 3 0</span>
+                <?php } ?>
             </div>
             <div class="flex-row g-1">
-                <a class="btn-classic hover-red" href="../index.php">Leave</a>
+                <a class="btn-classic hover-red" href="<?= $room ? 'lobby.php?m=multi&amp;leave=' . escape_html($room_code) : '../index.php' ?>">Leave</a>
                 <a class="btn-classic hover-grn" href="#spin">Submit answers</a>
             </div>
         </section>

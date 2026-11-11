@@ -324,6 +324,21 @@ a.crate:hover {
     text-align: center;
 }
 
+.auth-page {
+    display: grid;
+    min-height: 100dvh;
+    place-items: center;
+    padding: 2rem;
+}
+
+.auth-panel {
+    width: min(100%, 34rem);
+}
+
+.auth-panel a {
+    text-decoration: underline;
+}
+
 .waiting-note {
     align-self: center;
     padding: 1rem;
@@ -378,6 +393,24 @@ a.crate:hover {
     color: var(--ink);
     font-family: a, Arial, Helvetica, sans-serif;
     font-size: 1.2em;
+}
+
+.card input:disabled {
+    opacity: 0.65;
+}
+
+.answer-error {
+    min-height: 1em;
+    color: var(--red);
+    font-size: 0.8em;
+}
+
+.answer-invalid input {
+    border-bottom-color: var(--red);
+}
+
+.over [hidden] {
+    display: none;
 }
 
 .card-corner {

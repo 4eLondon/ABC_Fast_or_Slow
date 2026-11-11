@@ -72,6 +72,10 @@ $ex = ['Mike', 'Mia', 'Mug', 'Mango', 'Mexico'];
         <!-- [ Misc footer details ] -->
         <section id="footer">
             ABC Fast or Slow
+            <span> | </span>
+            <a href="pages/auth.php?mode=login">Sign in</a>
+            <span> | </span>
+            <a href="pages/auth.php?mode=register">Create account</a>
         </section>
 
     </div>

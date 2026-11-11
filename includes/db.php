@@ -10,6 +10,7 @@
     // Check whether the database connection was successful
     if ($conn === false) {
 
+
         // Display an error message if the connection fails
         die("Connection failed: " . mysqli_connect_error());
     }

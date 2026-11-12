@@ -1,25 +1,33 @@
 <?php
+require_once 'validation.php';
+require_once 'db.php';
 
-// Connect to the database
-require_once __DIR__ . '/db.php';
 
-// Retrieve all categories from the categories table
-$sql = "SELECT * FROM categories";
+var_dump(validate_answer("Jamaica", "J"));
+var_dump(validate_answer("Kingston", "J"));
+var_dump(validate_answer("", "J"));
+var_dump(validate_answer("Jamaica", "AB"));
 
-$result = mysqli_query($conn, $sql);
+echo "<br><br>";
+    $categories = ["Country", "City", "Food"];
 
-// Check whether the query worked
-if ($result) {
+    $answers = [
+        "Country" => "Jamaica",
+        "City" => "Jerusalem",
+        "Food" => "Jerk Chicken"
+    ];
 
-    echo "<h2>Database Test Successful!</h2>";
+    var_dump(can_player_stop($answers, $categories, "J"));
 
-    // Display each category
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo htmlspecialchars($row['label']) . "<br>";
-    }
+    $answers["Food"] = "";
+    var_dump(can_player_stop($answers, $categories, "J"));
 
-} else {
-    echo "Query failed: " . mysqli_error($conn);
-}
+    $answers["Food"] = "Jerk Chicken";
+    $answers["City"] = "Kingston";
+    var_dump(can_player_stop($answers, $categories, "J"));
+
+
+    echo "<br><br>";
+    var_dump(stop_round($conn, 1, 1, "invalid"));
 
 ?>

@@ -1,105 +1,153 @@
 <?php
 
-    // Includes the game.php file so this file can use the normalize_answer() function.
-    // require_once stops the same file from being included more than once.
     require_once __DIR__ . '/game.php';
 
+    //checks whether a player's answer is valid 
+    function validate_answer(string $answer, string $roundLetter ): bool {
 
-    // This function checks whether a player's answer follows the game rules.
-    // It receives the player's answer and the letter selected for the current round.
-    // It returns true if the answer is valid or false if it is invalid.
-    function validate_answer(string $answer, string $roundLetter): bool
-    {
-        // Remove unnecessary spaces, convert the answer to lowercase
-        // and standardize the text so it can be checked correctly.
-        $answer = normalize_answer($answer);
+        // Remove unnecessary spaces
+            $answer = trim($answer);
 
-        // Normalize the round letter as well so both values use the same format.
-        $roundLetter = normalize_answer($roundLetter);
+            // Check whether the answer is empty.
+            if ($answer === "") {
+                return false;
+            }
 
-        // Check whether the player submitted an empty answer.
-        // An empty answer is not allowed, so return false.
-        if ($answer === "") {
-            return false;
-        }
-
-        // Check whether the answer contains more than 40 characters.
-        // Answers longer than 40 characters are not accepted.
-        if (strlen($answer) > 40) {
-            return false;
-        }
+        // Check whether the answer is longer than 40 characters.
+            if (mb_strlen($answer, 'UTF-8') > 40) {
+                return false;
+            }
 
         // Check whether the round letter contains exactly one character.
-        // This ensures that the round has one valid starting letter.
-        if (strlen($roundLetter) !== 1) {
+        if (mb_strlen($roundLetter, 'UTF-8') !== 1) {
             return false;
         }
 
-        // Check whether the player's answer begins with the selected round letter.
-        // If the first character does not match, the answer is invalid.
+        // Convert both values to lowercase for comparison.
+        $answer = strtolower($answer);
+        $roundLetter = strtolower($roundLetter);
+
+        // Check whether the answer starts with the round letter.
         if (substr($answer, 0, 1) !== $roundLetter) {
             return false;
         }
 
-        // If the answer passes all the checks above, it is valid.
-        return true;
+        return true; 
     }
 
-    // This function checks whether a player is allowed to vote on another player's answer.
-    // It receives the voter's ID, the answer owner's ID, the answer,
-    // the round letter and the current round phase.
-    // It returns true if voting is allowed or false if it is not allowed.
-    function can_vote_on_answer(
-        int $voterId,
-        int $answerOwnerId,
-        string $answer,
-        string $roundLetter,
-        string $roundPhase
+    // checks whether a player has answered every category before stopping.
+    function can_player_stop(array $answers, array $categories, string $roundLetter): bool {
+
+        foreach ($categories as $category){
+
+            //checks if the answer exists for that category 
+            if (!isset($answers[$category]) || trim($answers[$category]) === "") {
+                return false;
+                }
+            }
+
+            //checks if the answer starts with the correct letter 
+            if (!validate_answer($answers[$category], $roundLetter)) {
+                return false;
+            }
+
+            return true;
+    }
+
+    //records who ended the round
+    function stop_round(mysqli $conn, int $roundId, ?int $playerId, string $reason): bool
+{
+    // List the valid reasons for ending a round.
+        $allowedReasons = ["first_finished", "timer", "host"];
+
+    // Check whether the reason is valid
+        if (!in_array($reason, $allowedReasons, true)) {
+            return false;
+    }
+
+    // Check whether the player ID matches the end reason.
+    if ($reason === "timer" && $playerId !== null) {
+        return false;
+    }
+
+    if ($reason !== "timer" && $playerId === null) {
+        return false;
+    }
+
+    // update the round information.
+    $sql = "UPDATE rounds 
+        SET stopped_at = NOW(), stopped_by = ?, end_reason = ?
+        WHERE id = ? AND stopped_at IS NULL";
+
+    // prepare the SQL statement
+    $stmt = mysqli_prepare($conn, $sql);
+
+    // Check whether the statement was prepared successfully.
+    if (!$stmt) {
+        return false;
+    }
+
+    // Connect the PHP variables to the SQL placeholders.
+    mysqli_stmt_bind_param($stmt, "isi", $playerId, $reason, $roundId);
+
+    // Execute the prepared statement.
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        return false;
+    }
+
+    // Check whether a round was actually updated.
+    $updated = mysqli_stmt_affected_rows($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Return true if one round was updated.
+    return $updated === 1;  
+}
+
+    // saves a player's answer.
+    function save_answer(
+        mysqli $conn,
+        int $roundId,
+        int $playerId,
+        int $categoryId,
+        string $answer
     ): bool {
 
-        // Check whether the game is currently in the review phase.
-        // Players are only allowed to vote during this phase.
-        if ($roundPhase !== "review") {
+        // Get the round letter from the database.
+        $sql = "SELECT letter FROM rounds WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        // Check whether the query was prepared successfully.
+        if (!$stmt) {
             return false;
         }
 
-        // Compare the voter's ID with the answer owner's ID.
-        // A player cannot vote on their own answer.
-        if ($voterId === $answerOwnerId) {
+        // Connect the round ID to the SQL placeholder.
+        mysqli_stmt_bind_param($stmt, "i", $roundId);
+        mysqli_stmt_execute($stmt);
+
+        // Get the result from the database.
+        $result = mysqli_stmt_get_result($stmt);
+
+        // Fetch the round information.
+        $round = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+
+        // Check whether the round exists.
+        if (!$round) {
             return false;
         }
 
-        // Check whether the answer follows the game rules.
-        // Players cannot vote on answers that are empty, too long,
-        // or do not begin with the selected round letter.
+        $roundLetter = $round['letter'];
+
+        // Check whether the answer is valid.
         if (!validate_answer($answer, $roundLetter)) {
             return false;
+     
         }
+}
 
-        // If all voting conditions are satisfied, allow the player to vote.
-        return true;
-    }
 
-    // Calculate the result of the votes submitted 
-    // The function receives the number of yes votes and no votes.
-    // It returns the result as a string.
-    function calculate_vote_result(int $yesVotes, int $noVotes): string
-    {
-        // Check whether anyone has voted yet.
-        // If there are no votes, the answer is still pending.
-        if ($yesVotes === 0 && $noVotes === 0) {
-            return "pending";
-        }
-
-        // Compare the yes votes with the no votes.
-        // If yes votes are greater than or equal to no votes,
-        // the answer is accepted. This also means a tie is accepted.
-        if ($yesVotes >= $noVotes) {
-            return "accepted";
-        }
-
-        // If no votes are greater than yes votes, the answer is rejected.
-        return "rejected";
-    }
 
 ?>

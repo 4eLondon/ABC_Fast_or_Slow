@@ -1,138 +1,125 @@
 <?php
 session_start();
+require_once '../includes/app.php';
+require_once '../includes/game_repository.php';
 require_once '../includes/rooms.php';
 
-$title = "Lobby";
-$m = ($_GET['m'] ?? 'local') == 'multi' || isset($_GET['room']) ? 'multi' : 'local';
-$multi = $m == 'multi';
-$names = ['You', 'Player 2', 'Player 3', 'Player 4'];
-$pc = ['red', 'yel', 'grn', 'blue'];
-$error = '';
-$rooms = $multi ? load_rooms() : [];
-$player_id = session_id();
-
-if ($multi && isset($_GET['leave'])) {
-    $leave_code = strtoupper(trim($_GET['leave']));
-    if (isset($rooms[$leave_code])) {
-        foreach ($rooms[$leave_code]['players'] as $i => $player) {
-            if ($player['id'] == $player_id) {
-                array_splice($rooms[$leave_code]['players'], $i, 1);
-                if ($rooms[$leave_code]['host'] == $player_id) {
-                    if (count($rooms[$leave_code]['players']) == 0) {
-                        unset($rooms[$leave_code]);
-                    } else {
-                        $rooms[$leave_code]['host'] = $rooms[$leave_code]['players'][0]['id'];
-                    }
-                }
-                save_rooms($rooms);
-                break;
-            }
-        }
-    }
-
-    unset($_SESSION['room_code']);
-    header('Location: lobby.php?m=multi');
+$db = database_connection();
+$multi = ($_GET['m'] ?? 'local') === 'multi' || isset($_GET['room']);
+$mode = $multi ? 'multi' : 'local';
+$user = current_user($db);
+if (!$user) {
+    header('Location: auth.php?next=' . rawurlencode('lobby.php?m=' . $mode));
     exit;
 }
 
-if ($multi && $_SERVER['REQUEST_METHOD'] == 'POST') {
-    $action = $_POST['action'] ?? '';
+$title = 'Lobby';
+$playerColors = ['red', 'yel', 'grn', 'blue'];
+$error = '';
+$roomCode = strtoupper(trim((string) ($_GET['room'] ?? '')));
 
-    if ($action == 'create' || $action == 'join') {
-        $name = trim($_POST['name'] ?? '');
-        if ($name == '' || strlen($name) > 20) {
-            $error = 'Enter a player name up to 20 characters.';
-        } elseif ($action == 'create') {
-            $code = new_room_code($rooms);
-            $rooms[$code] = [
-                'host' => $player_id,
-                'status' => 'lobby',
-                'settings' => ['rounds' => 5, 'speed' => 'slow'],
-                'players' => [['id' => $player_id, 'name' => $name]]
-            ];
-            save_rooms($rooms);
-            header('Location: lobby.php?room=' . $code);
-            exit;
-        } else {
-            $code = strtoupper(trim($_POST['code'] ?? ''));
-            if (!preg_match('/^[A-Z]{4}$/', $code)) {
-                $error = 'Enter a valid 4-letter room code.';
-            } elseif (!isset($rooms[$code])) {
-                $error = 'That room was not found.';
-            } elseif ($rooms[$code]['status'] != 'lobby') {
-                $error = 'That game has already started.';
-            } else {
-                $already_joined = false;
-                foreach ($rooms[$code]['players'] as $player) {
-                    if ($player['id'] == $player_id) {
-                        $already_joined = true;
-                    }
-                }
-
-                if (!$already_joined && count($rooms[$code]['players']) >= 4) {
-                    $error = 'That room is full.';
-                } else {
-                    if (!$already_joined) {
-                        $rooms[$code]['players'][] = ['id' => $player_id, 'name' => $name];
-                        save_rooms($rooms);
-                    }
-                    header('Location: lobby.php?room=' . $code);
-                    exit;
-                }
-            }
-        }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verify_csrf_token()) {
+        $error = 'Your session expired. Refresh the page and try again.';
     } else {
-        $code = strtoupper(trim($_POST['room'] ?? ''));
-        if (isset($rooms[$code]) && $rooms[$code]['host'] == $player_id) {
-            if ($action == 'settings') {
-                $rounds = $_POST['rounds'] ?? '';
-                $speed = $_POST['speed'] ?? '';
-                if (!in_array($rounds, ['5', '10'], true) || !in_array($speed, ['slow', 'fast'], true)) {
-                    $error = 'Choose valid game settings.';
-                } else {
-                    $rooms[$code]['settings'] = ['rounds' => (int) $rounds, 'speed' => $speed];
-                    save_rooms($rooms);
-                    header('Location: lobby.php?room=' . $code);
-                    exit;
+        $action = (string) ($_POST['action'] ?? '');
+        try {
+            if ($action === 'create') {
+                $rounds = (int) ($_POST['rounds'] ?? 5);
+                $speed = (string) ($_POST['speed'] ?? 'slow');
+                if (!in_array($rounds, [5, 10], true) || !in_array($speed, ['fast', 'slow'], true)) {
+                    throw new DomainException('Choose valid game settings.');
                 }
-            } elseif ($action == 'start') {
-                if (count($rooms[$code]['players']) < 1) {
-                    $error = 'At least one player is needed to start.';
-                } else {
-                    $rooms[$code]['status'] = 'started';
-                    save_rooms($rooms);
-                    header('Location: game.php?room=' . $code . '&l=A');
-                    exit;
-                }
+                $roomCode = create_room($db, (int) $user['id'], false, $rounds, $speed, 'A');
+                header('Location: lobby.php?room=' . $roomCode);
+                exit;
             }
-        } else {
-            $error = 'Only the room host can change settings or start the game.';
+
+            if ($action === 'join') {
+                $roomCode = strtoupper(trim((string) ($_POST['code'] ?? '')));
+                if (!preg_match('/^[A-Z]{4}$/', $roomCode)) {
+                    throw new DomainException('Enter a valid 4-letter room code.');
+                }
+                $room = find_room($db, $roomCode);
+                if (!$room) {
+                    throw new DomainException('That room was not found.');
+                }
+                join_room($db, (int) $room['id'], (int) $user['id']);
+                header('Location: lobby.php?room=' . $roomCode);
+                exit;
+            }
+
+            if ($action === 'leave') {
+                $roomCode = strtoupper(trim((string) ($_POST['room'] ?? '')));
+                $leavingRoom = find_room($db, $roomCode);
+                leave_room($db, $roomCode, (int) $user['id']);
+                if ($leavingRoom && $leavingRoom['mode'] === 'local') {
+                    header('Location: ../index.php');
+                    exit;
+                }
+                header('Location: lobby.php?m=multi');
+                exit;
+            }
+
+            if ($action === 'start-local') {
+                $letter = strtoupper(trim((string) ($_POST['letter'] ?? 'A')));
+                $rounds = (int) ($_POST['rounds'] ?? 5);
+                $speed = (string) ($_POST['speed'] ?? 'slow');
+                if (!preg_match('/^[A-Z]$/', $letter)
+                    || !in_array($rounds, [5, 10], true)
+                    || !in_array($speed, ['fast', 'slow'], true)) {
+                    throw new DomainException('Choose a valid letter and game settings.');
+                }
+                $roomCode = create_room($db, (int) $user['id'], true, $rounds, $speed, $letter);
+                header('Location: game.php?room=' . $roomCode);
+                exit;
+            }
+
+            $roomCode = strtoupper(trim((string) ($_POST['room'] ?? '')));
+            $room = find_room($db, $roomCode);
+            if (!$room || !find_room_player($db, (int) $room['id'], (int) $user['id'])) {
+                throw new DomainException('You are not a member of that room.');
+            }
+
+            if ($action === 'settings') {
+                $rounds = (int) ($_POST['rounds'] ?? 0);
+                $speed = (string) ($_POST['speed'] ?? '');
+                if (!in_array($rounds, [5, 10], true) || !in_array($speed, ['fast', 'slow'], true)) {
+                    throw new DomainException('Choose valid game settings.');
+                }
+                update_room_settings($db, $room, (int) $user['id'], $rounds, $speed);
+            } elseif ($action === 'start') {
+                start_room($db, $room, (int) $user['id'], 'A');
+                header('Location: game.php?room=' . $roomCode);
+                exit;
+            } else {
+                throw new DomainException('That lobby action is not available.');
+            }
+        } catch (DomainException $exception) {
+            $error = $exception->getMessage();
         }
     }
 }
 
-$room_code = strtoupper(trim($_GET['room'] ?? ''));
-$room = isset($rooms[$room_code]) ? $rooms[$room_code] : null;
-$is_host = $room && $room['host'] == $player_id;
-$is_player = false;
-if ($room) {
-    foreach ($room['players'] as $player) {
-        if ($player['id'] == $player_id) {
-            $is_player = true;
-            break;
-        }
-    }
-}
-if ($multi && $room && !$is_player) {
+$room = $multi && preg_match('/^[A-Z]{4}$/', $roomCode) ? find_room($db, $roomCode) : null;
+$isPlayer = $room && find_room_player($db, (int) $room['id'], (int) $user['id']);
+$isHost = $room && (int) $room['host_id'] === (int) $user['id'];
+if ($room && !$isPlayer) {
     $room = null;
+    $isHost = false;
     $error = 'Join this room using its code before opening the lobby.';
 }
-if ($multi && $room && $room['status'] == 'started') {
-    header('Location: game.php?room=' . $room_code . '&l=A');
+if ($room && $room['status'] === 'playing') {
+    header('Location: game.php?room=' . $roomCode);
     exit;
 }
-?>
+if ($room && $room['status'] !== 'lobby') {
+    $room = null;
+    $error = 'That room is no longer available.';
+}
 
+$csrfToken = csrf_token();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -150,120 +137,147 @@ if ($multi && $room && $room['status'] == 'started') {
                 <a class="btn-classic hover-red" href="../index.php">Back</a>
             </section>
 
-            <?php if ($error != '') { ?>
+            <?php if ($error !== '') { ?>
                 <p class="form-error" role="alert"><?= escape_html($error) ?></p>
             <?php } ?>
 
             <section class="room-entry-grid">
                 <form class="room-entry bg-blue" method="post">
                     <h2>Create a room</h2>
-                    <label for="host-name">Your name</label>
-                    <input class="input-classic" id="host-name" name="name" maxlength="20" required>
+                    <input type="hidden" name="csrf_token" value="<?= escape_html($csrfToken) ?>">
+                    <label for="create-rounds">Rounds</label>
+                    <select class="input-classic" id="create-rounds" name="rounds">
+                        <option value="5">5 rounds</option>
+                        <option value="10">10 rounds</option>
+                    </select>
+                    <label for="create-speed">Letter speed</label>
+                    <select class="input-classic" id="create-speed" name="speed">
+                        <option value="slow">Slow letters</option>
+                        <option value="fast">Fast letters</option>
+                    </select>
                     <button class="btn-classic hover-grn" type="submit" name="action" value="create">Create room</button>
                 </form>
 
                 <form class="room-entry bg-teal" method="post">
                     <h2>Join a room</h2>
-                    <label for="join-name">Your name</label>
-                    <input class="input-classic" id="join-name" name="name" maxlength="20" required>
+                    <input type="hidden" name="csrf_token" value="<?= escape_html($csrfToken) ?>">
                     <label for="room-code-input">4-letter room code</label>
                     <input class="input-classic" id="room-code-input" name="code" maxlength="4" pattern="[A-Za-z]{4}" required>
                     <button class="btn-classic hover-yel" type="submit" name="action" value="join">Join room</button>
                 </form>
             </section>
-        <?php } else { ?>
+        <?php } elseif ($multi) { ?>
             <section class="flex-row" id="lobby_head">
-                <h1 id="lobby_title"><?= $multi ? 'Multiplayer lobby' : 'Local lobby' ?></h1>
-                <?php if ($multi) { ?>
-                    <span id="room_code">Room <?= escape_html($room_code) ?></span>
-                <?php } ?>
+                <h1 id="lobby_title">Multiplayer lobby</h1>
+                <span id="room_code">Room <?= escape_html($roomCode) ?></span>
             </section>
 
-            <?php if ($error != '') { ?>
+            <?php if ($error !== '') { ?>
                 <p class="form-error" role="alert"><?= escape_html($error) ?></p>
             <?php } ?>
 
             <section class="flex-row ele-center g-3" id="lobby_main">
                 <div id="players">
-                    <?php if ($multi) { ?>
-                        <?php foreach ($room['players'] as $i => $player) { ?>
-                            <div class="card c-<?= $pc[$i] ?>">
-                                <span class="flex-col ele-center-hori card-strip"><?= $i + 1 ?></span>
-                                <div class="flex-col ele-center g-1 card-body">
-                                    <div class="avatar"></div>
-                                    <span class="card-name"><?= escape_html($player['name']) ?></span>
-                                    <span class="tag"><?= $player['id'] == $room['host'] ? 'Host' : 'Ready' ?></span>
-                                </div>
-                                <span class="card-corner"><?= $i + 1 ?></span>
+                    <?php foreach ($room['players'] as $i => $player) { ?>
+                        <div class="card c-<?= $playerColors[$i] ?>">
+                            <span class="flex-col ele-center-hori card-strip"><?= $i + 1 ?></span>
+                            <div class="flex-col ele-center g-1 card-body">
+                                <div class="avatar"></div>
+                                <span class="card-name"><?= escape_html($player['username']) ?></span>
+                                <span class="tag"><?= (int) $player['user_id'] === (int) $room['host_id'] ? 'Host' : 'Ready' ?></span>
                             </div>
-                        <?php } ?>
-                    <?php } else { ?>
-                        <?php foreach ($pc as $i => $c) { ?>
-                            <div class="card c-<?= $c ?>">
-                                <span class="flex-col ele-center-hori card-strip"><?= $i + 1 ?></span>
-                                <div class="flex-col ele-center g-1 card-body">
-                                    <div class="avatar"></div>
-                                    <input class="input-classic" placeholder="<?= $names[$i] ?>" aria-label="<?= $names[$i] ?>">
-                                </div>
-                                <span class="card-corner"><?= $i + 1 ?></span>
-                            </div>
-                        <?php } ?>
+                            <span class="card-corner"><?= $i + 1 ?></span>
+                        </div>
                     <?php } ?>
                 </div>
 
-                <?php if (!$multi) { ?>
-                    <?php include '../includes/wheel.php'; ?>
-                <?php } ?>
-
                 <div class="flex-col ele-center-hori g-1" id="side">
-                    <?php if (!$multi) { ?>
-                        <?php $lw = '10rem'; $let = '?'; include '../includes/lcard.php'; ?>
-                        <select class="input-classic" aria-label="Game length">
-                            <option>5 rounds</option>
-                            <option>10 rounds</option>
+                    <h2>Host settings</h2>
+                    <form class="flex-col g-1" method="post">
+                        <input type="hidden" name="csrf_token" value="<?= escape_html($csrfToken) ?>">
+                        <input type="hidden" name="room" value="<?= escape_html($roomCode) ?>">
+                        <label for="rounds">Rounds</label>
+                        <select class="input-classic" id="rounds" name="rounds" <?= $isHost ? '' : 'disabled' ?>>
+                            <option value="5" <?= (int) $room['total_rounds'] === 5 ? 'selected' : '' ?>>5 rounds</option>
+                            <option value="10" <?= (int) $room['total_rounds'] === 10 ? 'selected' : '' ?>>10 rounds</option>
                         </select>
-                        <select class="input-classic" aria-label="Letter speed">
-                            <option>Slow letters</option>
-                            <option>Fast letters</option>
+                        <label for="speed">Letter speed</label>
+                        <select class="input-classic" id="speed" name="speed" <?= $isHost ? '' : 'disabled' ?>>
+                            <option value="slow" <?= $room['default_speed'] === 'slow' ? 'selected' : '' ?>>Slow letters</option>
+                            <option value="fast" <?= $room['default_speed'] === 'fast' ? 'selected' : '' ?>>Fast letters</option>
                         </select>
-                    <?php } else { ?>
-                        <h2>Host settings</h2>
-                        <form class="flex-col g-1" method="post">
-                            <input type="hidden" name="room" value="<?= escape_html($room_code) ?>">
-                            <label for="rounds">Rounds</label>
-                            <select class="input-classic" id="rounds" name="rounds" <?= $is_host ? '' : 'disabled' ?>>
-                                <option value="5" <?= $room['settings']['rounds'] == 5 ? 'selected' : '' ?>>5 rounds</option>
-                                <option value="10" <?= $room['settings']['rounds'] == 10 ? 'selected' : '' ?>>10 rounds</option>
-                            </select>
-                            <label for="speed">Letter speed</label>
-                            <select class="input-classic" id="speed" name="speed" <?= $is_host ? '' : 'disabled' ?>>
-                                <option value="slow" <?= $room['settings']['speed'] == 'slow' ? 'selected' : '' ?>>Slow letters</option>
-                                <option value="fast" <?= $room['settings']['speed'] == 'fast' ? 'selected' : '' ?>>Fast letters</option>
-                            </select>
-                            <?php if ($is_host) { ?>
-                                <button class="btn-classic hover-blue" type="submit" name="action" value="settings">Save settings</button>
-                            <?php } ?>
-                        </form>
-                    <?php } ?>
+                        <?php if ($isHost) { ?>
+                            <button class="btn-classic hover-blue" type="submit" name="action" value="settings">Save settings</button>
+                        <?php } ?>
+                    </form>
                 </div>
             </section>
 
             <section class="flex-row g-1" id="lobby_buttons">
-                <?php if ($multi) { ?>
-                    <a class="btn-classic hover-red" href="lobby.php?m=multi&amp;leave=<?= escape_html($room_code) ?>">Leave room</a>
-                    <?php if ($is_host) { ?>
-                        <form method="post">
-                            <input type="hidden" name="room" value="<?= escape_html($room_code) ?>">
-                            <button class="btn-classic hover-grn" type="submit" name="action" value="start">Start game</button>
-                        </form>
-                    <?php } else { ?>
-                        <span class="waiting-note">Waiting for the host to start</span>
-                    <?php } ?>
-                    <a class="btn-classic hover-blue" href="lobby.php?room=<?= escape_html($room_code) ?>">Refresh lobby</a>
+                <form method="post">
+                    <input type="hidden" name="csrf_token" value="<?= escape_html($csrfToken) ?>">
+                    <input type="hidden" name="room" value="<?= escape_html($roomCode) ?>">
+                    <button class="btn-classic hover-red" type="submit" name="action" value="leave">Leave room</button>
+                </form>
+                <?php if ($isHost) { ?>
+                    <form method="post">
+                        <input type="hidden" name="csrf_token" value="<?= escape_html($csrfToken) ?>">
+                        <input type="hidden" name="room" value="<?= escape_html($roomCode) ?>">
+                        <button class="btn-classic hover-grn" type="submit" name="action" value="start">Start game</button>
+                    </form>
                 <?php } else { ?>
-                    <a class="btn-classic hover-red" href="../index.php">Back</a>
-                    <a class="btn-classic hover-grn" id="go" href="game.php?m=local&amp;l=A">Start game</a>
+                    <span class="waiting-note">Waiting for the host to start</span>
                 <?php } ?>
+                <a class="btn-classic hover-blue" href="lobby.php?room=<?= escape_html($roomCode) ?>">Refresh lobby</a>
+            </section>
+        <?php } else { ?>
+            <section class="flex-row" id="lobby_head">
+                <h1 id="lobby_title">Local game</h1>
+                <span>Signed in as <?= escape_html($user['username']) ?></span>
+            </section>
+
+            <?php if ($error !== '') { ?>
+                <p class="form-error" role="alert"><?= escape_html($error) ?></p>
+            <?php } ?>
+
+            <section class="flex-row ele-center g-3" id="lobby_main">
+                <div id="players">
+                    <div class="card c-blue">
+                        <span class="flex-col ele-center-hori card-strip">1</span>
+                        <div class="flex-col ele-center g-1 card-body">
+                            <div class="avatar"></div>
+                            <span class="card-name"><?= escape_html($user['username']) ?></span>
+                        </div>
+                        <span class="card-corner">1</span>
+                    </div>
+                </div>
+                <?php include '../includes/wheel.php'; ?>
+                <div class="flex-col ele-center-hori g-1" id="side">
+                    <div class="lcard" style="--lw: 10rem">
+                        <span class="corner pick">A</span>
+                        <div class="lband"><span class="letter pick">A</span></div>
+                        <span class="corner corner-b pick">A</span>
+                    </div>
+                    <label for="local-rounds">Rounds</label>
+                    <select class="input-classic" id="local-rounds" name="rounds" form="local-start">
+                        <option value="5">5 rounds</option>
+                        <option value="10">10 rounds</option>
+                    </select>
+                    <label for="local-speed">Letter speed</label>
+                    <select class="input-classic" id="local-speed" name="speed" form="local-start">
+                        <option value="slow">Slow letters</option>
+                        <option value="fast">Fast letters</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="flex-row g-1" id="lobby_buttons">
+                <a class="btn-classic hover-red" href="../index.php">Back</a>
+                <form id="local-start" method="post">
+                    <input type="hidden" name="csrf_token" value="<?= escape_html($csrfToken) ?>">
+                    <input type="hidden" id="start-letter" name="letter" value="A">
+                    <button class="btn-classic hover-grn" id="go" type="submit" name="action" value="start-local">Start game</button>
+                </form>
             </section>
         <?php } ?>
     </div>

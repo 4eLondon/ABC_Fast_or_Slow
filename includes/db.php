@@ -1,9 +1,21 @@
 <?php
-$conn = new mysqli("127.0.0.1", "root", "", "abc_fast_or_slow", 3307);
+    // Connect to the ABC Fast or Slow database
+    $conn = mysqli_connect(
+        "localhost",
+        "root",
+        "",
+        "abc_fast_or_slow"
+    );
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Check whether the database connection was successful
+    if ($conn === false) {
 
-echo "Connected!";   // <- add this line, test, then delete it
+
+        // Display an error message if the connection fails
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Set the character encoding to support different characters
+    mysqli_set_charset($conn, "utf8mb4");
+
 ?>

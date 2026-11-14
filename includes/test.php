@@ -1,25 +1,33 @@
 <?php
+require_once 'validation.php';
+require_once 'db.php';
 
-require_once 'includes/validation.php';
 
-$roundLetter = "B";
+var_dump(validate_answer("Jamaica", "J"));
+var_dump(validate_answer("Kingston", "J"));
+var_dump(validate_answer("", "J"));
+var_dump(validate_answer("Jamaica", "AB"));
 
-$answers = [
-    "Banana",
-    "Blue Mountain",
-    "Apple",
-    "",
-    "  Banana  "
-];
+echo "<br><br>";
+    $categories = ["Country", "City", "Food"];
 
-foreach ($answers as $answer) {
+    $answers = [
+        "Country" => "Jamaica",
+        "City" => "Jerusalem",
+        "Food" => "Jerk Chicken"
+    ];
 
-    if (validate_answer($answer, $roundLetter)) {
-        echo $answer . " - Valid<br>";
-    } else {
-        echo $answer . " - Invalid<br>";
-    }
+    var_dump(can_player_stop($answers, $categories, "J"));
 
-}
+    $answers["Food"] = "";
+    var_dump(can_player_stop($answers, $categories, "J"));
+
+    $answers["Food"] = "Jerk Chicken";
+    $answers["City"] = "Kingston";
+    var_dump(can_player_stop($answers, $categories, "J"));
+
+
+    echo "<br><br>";
+    var_dump(stop_round($conn, 1, 1, "invalid"));
 
 ?>

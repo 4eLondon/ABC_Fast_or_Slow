@@ -1,0 +1,143 @@
+/* x x x x x x x x x x x x x x x x x x x
+        [ Containers & Content ] 
+ x x x x x x x x x x x x x x x x x x x */
+
+.flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-2 {
+    gap: 2rem;
+}
+
+.gap-4 {
+    gap: 4rem;
+}
+
+.items-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.items-center-y {
+    align-items: center;
+}
+
+.items-center-x {
+    justify-content: center;
+}
+
+/* x x x x x x x x x x x x x x x x x x x
+            [ Scale & size ] 
+ x x x x x x x x x x x x x x x x x x x */
+
+.fullscreen {
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.fullscreen-height {
+    height: 100dvh;
+}
+
+.fullscreen-width {
+    width: 100dvw;
+}
+
+
+
+/* x x x x x x x x x x x x x x x x x x x
+            [ Opacity ]
+ x x x x x x x x x x x x x x x x x x x */
+
+.hidden {
+    display: none;
+}
+
+
+.visible {
+    display: block;
+}
+
+
+
+/* x x x x x x x x x x x x x x x x x x x
+            [ Buttons ] 
+ x x x x x x x x x x x x x x x x x x x */
+
+.button-classic {
+    border-radius: 5rem;
+    width: 6dvw;
+    height: 5dvh;
+    border: none;
+    background-color: white;
+    border: solid black 0.2rem;
+}
+
+
+/* x x x x x x x x x x x x x x x x x x x
+            [ Cards ] 
+ x x x x x x x x x x x x x x x x x x x */
+
+.card-mode {
+    background-color: red;
+    color: white;
+    height: 14rem;
+    width: 18rem;
+    transform: skewY(-3deg);
+    border-radius: 0.2rem;
+    border: black solid 0.3rem;
+    box-shadow: 0.6rem 0.6rem black;
+}
+
+.card-mode-banner {
+    width: 60%;
+    position: absolute;
+    background-color: black;
+    height: fit-content;
+    padding: 0.5rem;
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.card-large {
+    width: 16rem;
+    height: 90%;
+    background-color: black;
+    border-radius: 1rem;
+    border: solid white 0.5rem;
+    outline: black 0.5rem solid;
+}
+
+.card-small {
+    width: 6rem;
+    height: 10rem;
+    background-color: black;
+    border-radius: 1rem;
+    border: solid white 0.2rem;
+    outline: black 0.2rem solid;
+
+}
+
+.card-mode-long {
+    background-color: white;
+    height: fit-content;
+    width: 50rem;
+    transform: skewY(-1deg);
+    padding-inline: 1rem;
+    border: solid black 0.2rem;
+    color: black;
+    box-shadow: 0.5rem 0.5rem black;
+}

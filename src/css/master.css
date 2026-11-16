@@ -5,6 +5,7 @@
 body {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 a {
@@ -16,67 +17,7 @@ li {
     list-style: none;
 }
 
-
-
-/* - - - - - - - - - - - - - - - 
-        ( Index page )
- - - - - - - - - - - - - - - - - */
-
-
 #master {
     padding-top: 2rem;
     background-color: red;
-}
-
-#nav {
-    height: 5dvh;
-    background-color: white;
-    border-radius: 50px;
-    width: 50dvw;
-}
-
-
-/* ---------------------------- */
-
-#hero {
-    font-size: 2rem;
-    color: black;
-    padding: 1rem;
-    background-color: blue;
-
-}
-
-
-#header_a {
-    color: white;
-}
-
-#header_b {
-    font-size: 15rem;
-    color: black;
-
-}
-
-
-
-/* ---------------------------- */
-
-
-#gamemode {
-    background-color: yellow;
-    padding: 4rem;
-}
-
-#gamemode_title {
-    font-size: 3rem;
-}
-
-/* ---------------------------- */
-
-#guide {
-    padding: 2rem;
-}
-
-#guide_text {
-    max-width: 20rem;
 }

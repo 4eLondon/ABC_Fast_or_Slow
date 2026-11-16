@@ -1,5 +1,5 @@
 /* x x x x x x x x x x x x x x x x x x x
-        [ Containers & Content ] 
+        [ Containers & Alignment ] 
  x x x x x x x x x x x x x x x x x x x */
 
 .flex {
@@ -25,6 +25,25 @@
 .gap-4 {
     gap: 4rem;
 }
+
+
+.margin-1 {
+    margin: 1rem;
+}
+
+.margin-2 {
+    margin: 2rem;
+}
+
+.margin-4 {
+    margin: 4rem;
+}
+
+
+
+
+
+
 
 .items-center {
     justify-content: center;
@@ -74,18 +93,47 @@
 
 
 /* x x x x x x x x x x x x x x x x x x x
-            [ Buttons ] 
+            [ Buttons & Inputs ] 
  x x x x x x x x x x x x x x x x x x x */
 
 .button-classic {
-    border-radius: 5rem;
     width: 6dvw;
     height: 5dvh;
-    border: none;
+    border: black 0.2rem solid;
+    border-radius: 10rem;
     background-color: white;
-    border: solid black 0.2rem;
+    box-shadow: 0.3rem 0.3rem black;
 }
 
+.button-lobby-menu {
+    width: fit-content;
+    padding: 0.3rem;
+    padding-right: 1rem;
+    padding-left: 0.5rem;
+    align-items: center;
+    justify-content: start;
+    background: none;
+    border: none;
+    font-size: 2rem;
+}
+
+.icon-lobby-menu {
+    width: 2rem;
+    height: 2rem;
+    background-color: blue;
+    border: none;
+}
+
+.input-text-classic {
+    width: 12dvw;
+    height: 3dvh;
+    border: black solid 0.2;
+    border-radius: 10rem;
+    background-color: white;
+    padding: 0.5rem;
+    box-shadow: 0.4rem 0.4rem black;
+
+}
 
 /* x x x x x x x x x x x x x x x x x x x
             [ Cards ] 
@@ -116,9 +164,19 @@
     width: 16rem;
     height: 90%;
     background-color: black;
-    border-radius: 1rem;
+    border-radius: 0.1rem;
     border: solid white 0.5rem;
     outline: black 0.5rem solid;
+}
+
+.card-large-inner {
+    background-color: white;
+    transform: skewY(-20deg);
+    height: 70%;
+    width: 100%;
+    border-inline: black solid 0.5rem;
+    outline: white 0.2rem solid;
+    outline-offset: 0.3rem;
 }
 
 .card-small {

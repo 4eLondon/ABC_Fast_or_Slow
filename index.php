@@ -8,6 +8,7 @@ $title = "Page";
 <head>
     <title><?= $title ?></title>
     <link rel="stylesheet" href="src/css/master.css">
+    <link rel="stylesheet" href="src/css/index.css">
     <link rel="stylesheet" href="src/css/classes.css">
 </head>
 
@@ -24,11 +25,22 @@ $title = "Page";
         <section id="hero" class="flex flex-row gap-4">
 
             <h1 id="header_a"><span id="header_b">ABC</span><br>Fast or Slow</h1>
-            <div class="card-large"></div>
+            <div class="card-large flex items-center">
+
+
+                <div class="flex items-center card-large-inner">
+                    <img style="transform: rotateZ(45deg); width: 7rem; height: 5rem; border-radius: 0.2rem; background-color: black;">
+                </div>
+
+
+            </div>
+
         </section>
 
 
-        <section id="gamemode" class="flex flex-col fullscreen-width gap-2 items-center">
+
+
+        <section id="gamemode" class="flex flex-col gap-2 items-center">
 
             <h1 id="gamemode_title">Gamemodes</h1>
 
@@ -46,7 +58,7 @@ $title = "Page";
                 </div>
 
                 <div class="flex flex-col items-center-y gap-1 card-mode">
-                    <a href="pages/lobby.php"><img src=""></a>
+                    <a href="pages/lobby.php"><img src="" style="height: 15rem; width: 15rem; background-color: white;"></a>
                     <span class="card-mode-banner">Blitz</span>
                 </div>
 
@@ -62,13 +74,15 @@ $title = "Page";
 
             </section>
 
-
-
             <section id="gamemode_description" class="flex flex-col card-mode-long items-center-y hidden">
                 <p>Game Mode can refer to different things depending on the platform: on iPhone/iPad/Mac it prioritizes your game’s performance</p>
             </section>
 
         </section>
+
+
+
+
 
         <section id="guide" class="flex flex-row gap-4">
             <div id="guide_text" class="flex flex-col">

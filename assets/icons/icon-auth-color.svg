@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 68 68" width="68" height="68">
+  <defs>
+    <g id="f"><circle cx="28" cy="18" r="11"/><path d="M6 52 Q6 34 28 34 Q50 34 50 52 Z"/></g>
+    <mask id="ext" maskUnits="userSpaceOnUse" x="0" y="0" width="68" height="68">
+      <rect width="68" height="68" fill="#fff"/>
+      <use xlink:href="#f" href="#f" fill="#000" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+    </mask>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="68" height="68">
+      <rect width="68" height="68" fill="#fff"/>
+      <polygon points="31,36 23,45 28,45 25,52 34,42 29,42" fill="#000"/>
+    </mask>
+  </defs>
+  <g mask="url(#ext)" fill="#86c35b">
+    <use xlink:href="#f" href="#f" transform="translate(1 1)"/>
+    <use xlink:href="#f" href="#f" transform="translate(2 2)"/>
+    <use xlink:href="#f" href="#f" transform="translate(3 3)"/>
+    <use xlink:href="#f" href="#f" transform="translate(4 4)"/>
+    <use xlink:href="#f" href="#f" transform="translate(5 5)"/>
+    <use xlink:href="#f" href="#f" transform="translate(6 6)"/>
+    <use xlink:href="#f" href="#f" transform="translate(7 7)"/>
+    <use xlink:href="#f" href="#f" transform="translate(8 8)"/>
+  </g>
+  <use xlink:href="#f" href="#f" fill="#86c35b" mask="url(#cut)"/>
+</svg>

@@ -1,0 +1,73 @@
+/* - - - - - - - - - - - - - - - -
+        [ Auth page ]
+ - - - - - - - - - - - - - - - - */
+#master {
+    background-image: url(../../assets/backgrounds/bg2.svg);
+    background-size: 5% 6%;
+    background-repeat: repeat;
+    animation: bg 60s ease-in-out infinite;
+}
+
+
+/* Assist Here */
+
+@keyframes bg {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1920px -800px;
+    }
+
+
+}
+
+
+#auth {
+    background-color: var(--a0);
+    width: fit-content;
+    height: fit-content;
+    padding-inline: 12rem;
+    padding-block: 4rem;
+    border-radius: 4rem;
+    margin-top: 10%;
+    opacity: 0.9;
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+
+.form-link {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.form-link a {
+    font-family: NowLight;
+    transition: color 0.2s, font-size 0.5s;
+}
+
+.form-link a:hover {
+    font-size: 1.3rem;
+}
+
+/* Assist Here */
+#login:target {
+    display: block;
+}
+
+#login:target+#signup {
+    display: none;
+}
+
+#signup:target {
+    display: block;
+}
+
+#signup:target+#login {
+    display: none;
+}

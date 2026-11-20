@@ -16,3 +16,121 @@ a {
 li {
     list-style: none;
 }
+
+
+
+/* - - - - - - - - - - - - - - - -
+          [ Colors ]
+ - - - - - - - - - - - - - - - - */
+:root {
+    --fg: #ffffff;
+    --bg: #262626;
+    --a0: #e0e0e0;
+    --a1: #ee542e;
+    --a2: #fcad1c;
+    --a3: #03b6cc;
+    --a4: #86c35b;
+    --a6: #f38eba;
+    --a7: #b0afd7;
+}
+
+
+/* - - - - - - - - - - - - - - - -
+          [ Fonts ]
+ - - - - - - - - - - - - - - - - */
+
+
+@font-face {
+    font-family: Color;
+    src: url(../../assets/fonts/ColorTube.otf);
+}
+
+.txt-color {
+    font-family: Color;
+}
+
+
+
+@font-face {
+    font-family: Pixel;
+    src: url(../../assets/fonts/Karm-Future.otf);
+}
+
+.txt-pixel {
+    font-family: Pixel;
+}
+
+
+
+@font-face {
+    font-family: Condition;
+    src: url(../../assets/fonts/Condition3D-Regular.ttf);
+}
+
+.txt-condition {
+    font-family: Condition;
+}
+
+
+
+
+
+
+
+@font-face {
+    font-family: Garet;
+    src: url(../../assets/fonts/Garet-Book.otf);
+}
+
+@font-face {
+    font-family: GaretBold;
+    src: url(../../assets/fonts/Garet-Heavy.otf);
+}
+
+.txt-title {
+    font-family: Garet;
+}
+
+.txt-title-bold {
+    font-family: GaretBold;
+}
+
+
+
+@font-face {
+    font-family: NowThin;
+    src: url(../../assets/fonts/Now-Thin.otf);
+}
+
+@font-face {
+    font-family: NowLight;
+    src: url(../../assets/fonts/Now-Light.otf);
+}
+
+@font-face {
+    font-family: NowMedium;
+    src: url(../../assets/fonts/Now-Medium.otf);
+}
+
+@font-face {
+    font-family: Now;
+    src: url(../../assets/fonts/Now-Regular.otf);
+}
+
+
+.txt-regular-1 {
+    font-family: NowThin;
+}
+
+.txt-regular-2 {
+    font-family: NowLight;
+}
+
+
+.txt-regular-3 {
+    font-family: NowMedium;
+}
+
+.txt-regular-4 {
+    font-family: Now;
+}

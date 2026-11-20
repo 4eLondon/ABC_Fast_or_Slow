@@ -144,6 +144,107 @@
 }
 
 
+.button-new-player {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 2rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+.button-new-player:hover {
+    scale: 120%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.button-new-player:active {
+    scale: 90%;
+    box-shadow: none;
+    border-radius: 2rem;
+    opacity: 0.1;
+    transform: translateY(0.5rem);
+}
+
+
+
+
+
+.button-new-player-alt {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+.button-new-player-alt:hover {
+    scale: 120%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.button-new-player-alt:active {
+    scale: 90%;
+    box-shadow: none;
+    border-radius: 2rem;
+    opacity: 0.1;
+    transform: translateY(0.5rem);
+}
+
+
+.button-new-player-static {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 2rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    transform: skewX(4deg);
+}
+
+.button-new-player-status {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 2rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    transition: scale 0.2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    transform: skewX(4deg);
+}
+
+.button-new-player-status:hover {
+    scale: 105%;
+    box-shadow: none;
+    transform: skewX(0deg);
+}
+
+.button-new-player-status:active {
+    scale: 90%;
+    box-shadow: none;
+    opacity: 0.1;
+    transform: translateY(0.5rem);
+}
+
+
 /* x o x     [ Input ]      x o x */
 
 
@@ -165,7 +266,123 @@
     outline: none;
 }
 
+
+.input-text-new-player {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+.input-text-new-player:hover {
+    scale: 110%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.input-text-new-player:focus {
+    border: solid 0.2rem var(--a2);
+    outline: none;
+    box-shadow: none;
+    scale: 110%;
+    border-radius: 2rem;
+}
+
+
+
+
+.input-text-new-player-alt {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 6rem;
+    padding-block: 2rem;
+    font-size: 1.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+
+
+.input-text-new-player-alt:hover {
+    scale: 110%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.input-text-new-player-alt:focus {
+    border: solid 0.2rem var(--bg);
+    outline: none;
+    box-shadow: none;
+    scale: 110%;
+    border-radius: 2rem;
+}
+
+
+/* x o x     [ Cards ]      x o x */
+
+
+.card-display {
+    border: 0.5rem solid var(--bg);
+    border-bottom: 6rem solid var(--bg);
+    padding-inline: 6rem;
+    height: 20rem;
+    text-align: center;
+    line-height: 0;
+    background-color: var(--fg);
+    transition: opacity 0.1s, border 0.2s, color 0.2s, scale 0.3s, transform 0.4s;
+}
+
+
+.card-display:hover {
+    opacity: 0.9;
+    border: 0.7rem solid var(--bg);
+    border-bottom: 2rem solid var(--bg);
+    scale: 90%;
+}
+
+.card-display:active {
+    opacity: 0;
+    transform: rotateY(180deg);
+    border: 0.7rem solid var(--bg);
+}
+
+.card-display-static {
+    border: 0.5rem solid var(--bg);
+    border-bottom: 6rem solid var(--bg);
+    padding-inline: 6rem;
+    height: 20rem;
+    text-align: center;
+    line-height: 0;
+    background-color: var(--fg);
+}
+
+
+
 /* x o x     [ Decals ]      x o x */
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.icon-label {
+    width: fit-content;
+    height: 1.5rem;
+}
+
+
 
 .film-bar {
     background-color: var(--bg);

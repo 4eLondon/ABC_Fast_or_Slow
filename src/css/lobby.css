@@ -1,0 +1,92 @@
+/* - - - - - - - - - - - - - - - -
+        [ Lobby page ]
+ - - - - - - - - - - - - - - - - */
+#master {
+    background-image: url(../../assets/backgrounds/bg3.svg);
+    background-size: auto 10%;
+    background-repeat: repeat;
+    animation: bg 60s ease-out infinite;
+}
+
+
+/* Assist Here */
+@keyframes bg {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1920px 0;
+    }
+
+}
+
+
+@keyframes txt {
+    0% {
+        scale: 100%;
+        transform: rotateZ(0deg);
+    }
+
+    50% {
+        scale: 90%;
+        transform: rotateZ(3deg);
+    }
+
+    100% {
+        scale: 100%;
+        transform: rotateZ(0deg);
+    }
+
+}
+
+
+
+
+#hero {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    z-index: 2;
+    opacity: 0.9;
+    bottom: 0%;
+    left: 2%;
+}
+
+.hero-text {
+    font-size: 8rem;
+    animation: txt 5s ease infinite;
+}
+
+#card {
+    position: absolute;
+    left: 12%;
+    bottom: 40%;
+    transform: rotateZ(-5deg);
+}
+
+
+#cardGuide {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+
+#letter {
+    font-size: 8rem;
+}
+
+
+
+
+
+#addIcon {
+    height: 3rem;
+    width: 3rem;
+}
+
+#players {
+    position: absolute;
+    right: 2%;
+    top: 10%;
+}

@@ -41,11 +41,11 @@ $userAccountStatus = "Not Logged in";
                     </li>
 
                     <li>
-                        <a href="pages/room.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-3"><img src="assets/icons/icon-join-online-light.svg" class="button-classic-icon"> Join online game</a>
+                        <a href="pages/multiplayer.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-3"><img src="assets/icons/icon-join-online-light.svg" class="button-classic-icon"> Join online game</a>
                     </li>
 
                     <li>
-                        <a href="pages/room.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-4"><img src="assets/icons/icon-host-room-light.svg" class="button-classic-icon"> Host online room</a>
+                        <a href="pages/host.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-4"><img src="assets/icons/icon-host-room-light.svg" class="button-classic-icon"> Host online room</a>
                     </li>
 
                     <li>

@@ -28,7 +28,7 @@ $pageTitle = "Login / Sign up";
                 <ul class="flex-col gap-1">
                     <li> <input type="text" class="input-text-classic" name="field_username" maxlength="30" placeholder="Username"></li>
                     <li><span class="flex-col">
-                            <input type="password" class="input-text-classic" name="field_password" placeholder="Password">
+                            <input type="password" class="input-text-classic" name="field_password" maxlength="50" minlength="4" placeholder="Password">
                             or
                             <input type="email" class="input-text-classic" name="field_email" placeholder="Email" required>
                         </span></li>
@@ -48,9 +48,9 @@ $pageTitle = "Login / Sign up";
 
                     <li> <input type="email" class="input-text-classic" name="field_email" placeholder="Email" required></li>
 
-                    <li> <input type="password" class="input-text-classic" name="field_password" placeholder="Password" required></li>
+                    <li> <input type="password" class="input-text-classic" name="field_password" maxlength="50" minlength="4" placeholder="Password" required></li>
 
-                    <li> <input type="password" class="input-text-classic" name="field_confirm_password" placeholder="Confirm Password" required></li>
+                    <li> <input type="password" class="input-text-classic" name="field_confirm_password" maxlength="50" minlength="4" placeholder="Confirm Password" required></li>
 
                     <li><button type="submit" class="button-classic-alt accent-4">Sign Up</button></li>
                     <li>

@@ -8,12 +8,13 @@ function database_connection(): PDO
         return $connection;
     }
 
-    $host = getenv('DB_HOST') ?: '127.0.0.1';
-    $port = getenv('DB_PORT') ?: '3306';
+    $host = getenv('DB_HOST') ?: 'localhost';
+    $port = getenv('DB_PORT') ?: '8002';
     $name = getenv('DB_NAME') ?: 'abc_fast_or_slow';
     $user = getenv('DB_USER') ?: 'root';
     $password = getenv('DB_PASS');
-    $password = $password === false ? '' : $password;
+    $password = $password === false ? '123' : $password;
+
 
     $dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
     $connection = new PDO($dsn, $user, $password, [

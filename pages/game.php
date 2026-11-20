@@ -1,14 +1,13 @@
 <?php
-$title = "Page";
+$pageTitle = "Page";
 ?>
 
 <!DOCTYPE HTML>
 <html>
 
 <head>
-    <title><?= $title ?></title>
-    <link rel="stylesheet" href="../src/css/master.css">
-    <link rel="stylesheet" href="../src/css/classes.css">
+    <title><?= $pageTitle ?></title>
+    <link rel="stylesheet" href="">
 </head>
 
 <body></body>

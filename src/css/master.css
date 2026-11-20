@@ -1,23 +1,18 @@
-/* - - - - - - - - - - - - - - - 
-              [ Globals ]
+/* - - - - - - - - - - - - - - - -
+    [ Global overrides ]
  - - - - - - - - - - - - - - - - */
 
+
 body {
-    margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    margin: 0;
 }
 
 a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
 }
 
 li {
     list-style: none;
-}
-
-#master {
-    padding-top: 2rem;
-    background-color: red;
 }

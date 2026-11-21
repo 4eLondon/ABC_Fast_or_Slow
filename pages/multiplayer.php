@@ -27,8 +27,14 @@ $roomID = "1234";
         |-------------------------------------------------------->
 
         <section id="lobbyMenu" class="fill flex-row items-center">
-            <div id="hero" class="txt-condition">
-                <h1 class="hero-text">Play online</h1>
+
+            <div id="hero" class="txt-condition flex-col gap-1 items-center">
+                <h1 class="hero-text" style="margin: 0;">Play Online</h1>
+
+                <button class="button-start-game flex-row items-center gap-1 hidden">
+                    <img src="../assets/icons/icon-play-cyan.svg" class="button-start-game-text icon">
+                    <h2 class="txt-regular-4 button-start-game-text accent-3-txt" style="color:var(--a3);">Start game</h2>
+                </button>
             </div>
 
             <div id="card" class="flex-col items-center hidden">

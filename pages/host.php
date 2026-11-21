@@ -27,9 +27,17 @@ $username = "player";
         |-------------------------------------------------------->
 
         <section id="lobbyMenu" class="fill flex-row items-center">
-            <div id="hero" class="txt-condition">
-                <h1 class="hero-text">Hosting game</h1>
+
+            <div id="hero" class="txt-condition flex-col gap-1 items-center">
+                <h1 class="hero-text" style="margin: 0;">Hosting Game</h1>
+
+                <button class="button-start-game flex-row items-center gap-1 hidden">
+                    <img src="../assets/icons/icon-play-green.svg" class="button-start-game-text icon">
+                    <h2 class="txt-regular-4 button-start-game-text accent-4-txt" style="color:var(--a4);">Start game</h2>
+                </button>
             </div>
+
+
 
             <div id="card" class="flex-col items-center">
                 <h2 class="txt-condition" id="cardGuide">Starting letter</h2>

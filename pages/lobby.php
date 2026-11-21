@@ -26,8 +26,13 @@ $letter = "A";
         |-------------------------------------------------------->
 
         <section id="lobbyMenu" class="fill flex-row items-center">
-            <div id="hero" class="txt-condition">
-                <h1 class="hero-text">Local Lobby</h1>
+            <div id="hero" class="txt-condition flex-col gap-1 items-center">
+                <h1 class="hero-text" style="margin: 0;">Local Lobby</h1>
+
+                <button class="button-start-game flex-row items-center gap-1">
+                    <img src="../assets/icons/icon-play-yellow.svg" class="button-start-game-text icon">
+                    <h2 class="txt-regular-4 button-start-game-text accent-2-txt" style="color:var(--a2);">Start game</h2>
+                </button>
             </div>
 
             <div id="card">

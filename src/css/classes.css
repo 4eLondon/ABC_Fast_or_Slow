@@ -245,6 +245,41 @@
 }
 
 
+
+.button-start-game {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.8rem 0.8rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    transform: skewX(15deg);
+    transition: scale 0.2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+}
+
+.button-start-game:hover {
+    scale: 105%;
+    box-shadow: none;
+}
+
+.button-start-game:active {
+    scale: 90%;
+    box-shadow: none;
+    opacity: 0.1;
+    transform: translateY(0.5rem), skewX(15deg);
+}
+
+
+.button-start-game-text {
+    margin: 0;
+    font-size: 2rem;
+    transform: skewX(-15deg);
+}
+
 /* x o x     [ Input ]      x o x */
 
 
@@ -330,6 +365,24 @@
 }
 
 
+.input-text-card {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 0.2rem var(--bg) solid;
+    width: 60%;
+    height: fit-content;
+}
+
+.input-text-card-1 {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 0.2rem var(--bg) solid;
+    width: 60%;
+    height: fit-content;
+}
+
 /* x o x     [ Cards ]      x o x */
 
 
@@ -366,6 +419,21 @@
     text-align: center;
     line-height: 0;
     background-color: var(--fg);
+}
+
+.card-display-alt {
+    border: 0.5rem solid var(--bg);
+    border-bottom: 2rem solid var(--bg);
+    padding-inline: 4rem;
+    padding-block: 1rem;
+    border-radius: 0 0 1rem 1rem;
+    height: 6rem;
+    text-align: center;
+    line-height: 0;
+    background-color: var(--a0);
+    background: none;
+    position: absolute;
+    top: 6%;
 }
 
 .card-small {
@@ -411,6 +479,23 @@
     opacity: 0.8;
 }
 
+.card-large {
+    height: fit-content;
+    width: fit-content;
+    border-radius: 2rem;
+    padding-block: 14rem;
+    padding-inline: 4rem;
+}
+
+.card-large img {
+    width: fit-content;
+    height: 15rem;
+}
+
+.card-large-back-1 {
+    background: url(../../assets/backgrounds/card7.svg);
+    opacity: 0.6;
+}
 
 
 
@@ -463,6 +548,34 @@
 }
 
 
+.accent-0-border:focus {
+    border-bottom: 0.2rem solid var(--a0);
+}
+
+.accent-1-border:focus {
+    border-bottom: 0.2rem solid var(--a1);
+}
+
+.accent-2-border:focus {
+    border-bottom: 0.2rem solid var(--a2);
+}
+
+.accent-3-border:focus {
+    border-bottom: 0.2rem solid var(--a3);
+}
+
+.accent-4-border:focus {
+    border-bottom: 0.2rem solid var(--a4);
+}
+
+.accent-5-border:focus {
+    border-bottom: 0.2rem solid var(--a5);
+}
+
+.accent-6-border:focus {
+    border-bottom: 0.2rem solid var(--a6);
+}
+
 
 
 .accent-0-txt:hover {
@@ -494,7 +607,90 @@
 }
 
 
+.accent-0-txt {
+    color: var(--a0);
+}
 
+.accent-1-txt {
+    color: var(--a1);
+}
+
+.accent-2-txt {
+    color: var(--a2);
+}
+
+.accent-3-txt {
+    color: var(--a3);
+}
+
+.accent-4-txt {
+    color: var(--a4);
+}
+
+.accent-5-txt {
+    color: var(--a5);
+}
+
+.accent-6-txt {
+    color: var(--a6);
+}
+
+
+.accent-0-border:hover {
+    border-bottom: 0.2rem solid var(--a0);
+}
+
+.accent-1-border:hover {
+    border-bottom: 0.2rem solid var(--a1);
+}
+
+.accent-2-border:hover {
+    border-bottom: 0.2rem solid var(--a2);
+}
+
+.accent-3-border:hover {
+    border-bottom: 0.2rem solid var(--a3);
+}
+
+.accent-4-border:hover {
+    border-bottom: 0.2rem solid var(--a4);
+}
+
+.accent-5-border:hover {
+    border-bottom: 0.2rem solid var(--a5);
+}
+
+.accent-6-border:hover {
+    border-bottom: 0.2rem solid var(--a6);
+}
+
+.accent-0-border:hover {
+    border-bottom: 0.2rem solid var(--a0);
+}
+
+.accent-1-border:hover {
+    border-bottom: 0.2rem solid var(--a1);
+}
+
+.accent-2-border:hover {
+    border-bottom: 0.2rem solid var(--a2);
+}
+
+.accent-3-border:hover {
+    border-bottom: 0.2rem solid var(--a3);
+}
+
+.accent-4-border:hover {
+    border-bottom: 0.2rem solid var(--a4);
+}
+
+.accent-5-border:hover {
+    border-bottom: 0.2rem solid var(--a5);
+}
+
+.accent-6-border:hover {
+    border-bottom: 0.2rem solid var(--a6);
+}
 
 
 .navi {

@@ -74,13 +74,35 @@ $userAccountStatus = "Not Logged in";
 
             </nav>
 
-            <footer class="fullscreen-width film-bar lock-bot flex-row items-center">
+            <footer class="fullscreen-width film-bar lock-bot flex-row items-center gap-2">
                 <a href="pages/guide.php" class="foot">
                     <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
                         <img class="icon" src="assets/icons/icon-about-dark.svg">
                         <h2>How to play</h2>
                     </div>
                 </a>
+
+
+
+
+
+                <a href="pages/game.php" class="foot">
+                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-ready-blue.svg">
+                        <h2>Testing: Game</h2>
+                    </div>
+                </a>
+
+                <a href="pages/summary.php" class="foot">
+                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-ready-green.svg">
+                        <h2>Testing: Summary</h2>
+                    </div>
+                </a>
+
+
+
+
             </footer>
         </section>
 

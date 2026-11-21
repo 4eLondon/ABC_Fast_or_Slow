@@ -7,10 +7,10 @@ require_once '../includes/validation.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-function game_action_response(int $status, array $data): void
+function game_action_response(int $httpStatus, array $responseData): void
 {
-    http_response_code($status);
-    echo json_encode($data);
+    http_response_code($httpStatus);
+    echo json_encode($responseData);
     exit;
 }
 
@@ -20,38 +20,40 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST'
 }
 
 $db = database_connection();
-$user = current_user($db);
-if (!$user) {
+$currentUser = current_user($db);
+if (!$currentUser) {
     game_action_response(401, ['error' => 'Sign in again before continuing.']);
 }
 
-$code = strtoupper(trim((string) ($_SERVER['REQUEST_METHOD'] === 'GET' ? ($_GET['room'] ?? '') : ($_POST['room'] ?? ''))));
-if (!preg_match('/^[A-Z]{4}$/', $code)) {
+$roomCode = strtoupper(trim((string) ($_SERVER['REQUEST_METHOD'] === 'GET' ? ($_GET['room'] ?? '') : ($_POST['room'] ?? ''))));
+if (!preg_match('/^[A-Z]{4}$/', $roomCode)) {
     game_action_response(400, ['error' => 'The room code is invalid.']);
 }
-$room = find_room($db, $code);
-$player = $room ? find_room_player($db, (int) $room['id'], (int) $user['id']) : null;
+$room = find_room($db, $roomCode);
+$player = $room ? find_room_player($db, (int) $room['id'], (int) $currentUser['id']) : null;
 if (!$room || !$player) {
     game_action_response(403, ['error' => 'You are not a member of this room.']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // AI assisted lines 39-50
+    // The browser polls this action for the latest round and submission status.
     $round = $room['round'];
-    $deadline = $round ? strtotime($round['deadline_at'] . ' UTC') : 0;
-    $submitted = false;
+    $roundDeadline = $round ? strtotime($round['deadline_at'] . ' UTC') : 0;
+    $hasSubmittedAnswers = false;
     if ($round) {
         $checkSubmission = $db->prepare(
             'SELECT 1 FROM submissions WHERE round_id = :round_id AND room_player_id = :player_id'
         );
         $checkSubmission->execute(['round_id' => $round['id'], 'player_id' => $player['id']]);
-        $submitted = (bool) $checkSubmission->fetchColumn();
+        $hasSubmittedAnswers = (bool) $checkSubmission->fetchColumn();
     }
 
     game_action_response(200, [
         'status' => $room['status'],
         'roundId' => $round ? (int) $round['id'] : null,
-        'roundEnded' => $round && ($round['stopped_at'] !== null || time() >= $deadline),
-        'submitted' => $submitted,
+        'roundEnded' => $round && ($round['stopped_at'] !== null || time() >= $roundDeadline),
+        'submitted' => $hasSubmittedAnswers,
     ]);
 }
 
@@ -59,9 +61,10 @@ if (!verify_csrf_token()) {
     game_action_response(403, ['error' => 'Your session expired. Refresh the game and try again.']);
 }
 
-$action = (string) ($_POST['action'] ?? '');
+$actionName = (string) ($_POST['action'] ?? '');
 try {
-    if ($action === 'submit') {
+    if ($actionName === 'submit') {
+        // AI assisted lines 70-87
         $roundId = filter_var($_POST['round_id'] ?? null, FILTER_VALIDATE_INT);
         $timedOut = ($_POST['timed_out'] ?? '') === '1';
         $answers = $_POST['answers'] ?? [];
@@ -75,15 +78,16 @@ try {
             game_action_response(409, ['error' => 'This round is no longer active. Refresh the game.']);
         }
 
-        $deadline = strtotime($expectedRound['deadline_at'] . ' UTC');
-        if ($timedOut && time() < $deadline) {
+        $roundDeadline = strtotime($expectedRound['deadline_at'] . ' UTC');
+        if ($timedOut && time() < $roundDeadline) {
             game_action_response(409, ['error' => 'The round timer has not expired yet.']);
         }
-        if (!$timedOut && time() >= $deadline) {
+        if (!$timedOut && time() >= $roundDeadline) {
             game_action_response(409, ['error' => 'Time is up. Try submitting again to save the answers before the timer closes.']);
         }
 
-        $normalized = [];
+        // Validate every answer before opening the transaction so nothing is partly saved.
+        $answersByCategoryId = [];
         foreach ($categories as $category) {
             $categoryId = (string) $category['id'];
             $value = $answers[$categoryId] ?? '';
@@ -97,9 +101,10 @@ try {
                     'category' => $categoryId,
                 ]);
             }
-            $normalized[(int) $category['id']] = $value;
+            $answersByCategoryId[(int) $category['id']] = $value;
         }
 
+        // Lock the round while saving to prevent two requests from finishing it at once.
         $db->beginTransaction();
         $lock = $db->prepare('SELECT stopped_at FROM rounds WHERE id = :id AND room_id = :room_id FOR UPDATE');
         $lock->execute(['id' => $roundId, 'room_id' => $room['id']]);
@@ -127,7 +132,7 @@ try {
              VALUES (:round_id, :player_id, :category_id, :value)
              ON DUPLICATE KEY UPDATE value = VALUES(value)'
         );
-        foreach ($normalized as $categoryId => $value) {
+        foreach ($answersByCategoryId as $categoryId => $value) {
             $saveAnswer->execute([
                 'round_id' => $roundId,
                 'player_id' => $player['id'],
@@ -150,7 +155,8 @@ try {
         game_action_response(200, ['saved' => true]);
     }
 
-    if ($action === 'next') {
+    if ($actionName === 'next') {
+        
         $letter = strtoupper(trim((string) ($_POST['letter'] ?? '')));
         if (!preg_match('/^[A-Z]$/', $letter) || $room['status'] !== 'playing' || !$room['round']) {
             game_action_response(400, ['error' => 'The next round request is invalid.']);
@@ -172,23 +178,23 @@ try {
             'SELECT id, number, deadline_at, stopped_at FROM rounds WHERE room_id = :room_id ORDER BY number DESC LIMIT 1 FOR UPDATE'
         );
         $latest->execute(['room_id' => $room['id']]);
-        $current = $latest->fetch();
-        if (!$current) {
+        $currentRound = $latest->fetch();
+        if (!$currentRound) {
             $db->rollBack();
             game_action_response(404, ['error' => 'No current round was found.']);
         }
-        if ($current['stopped_at'] === null && time() < strtotime($current['deadline_at'] . ' UTC')) {
+        if ($currentRound['stopped_at'] === null && time() < strtotime($currentRound['deadline_at'] . ' UTC')) {
             $db->rollBack();
             game_action_response(409, ['error' => 'Finish the current round before starting another.']);
         }
-        if ($current['stopped_at'] === null) {
+        if ($currentRound['stopped_at'] === null) {
             $stop = $db->prepare(
                 "UPDATE rounds SET stopped_at = UTC_TIMESTAMP(), end_reason = 'timer' WHERE id = :id"
             );
-            $stop->execute(['id' => $current['id']]);
+            $stop->execute(['id' => $currentRound['id']]);
         }
 
-        if ((int) $current['number'] >= (int) $lockedRoom['total_rounds']) {
+        if ((int) $currentRound['number'] >= (int) $lockedRoom['total_rounds']) {
             $finish = $db->prepare(
                 "UPDATE rooms SET status = 'finished', phase = 'finished', finished_at = UTC_TIMESTAMP() WHERE id = :id"
             );
@@ -197,22 +203,23 @@ try {
             game_action_response(200, ['finished' => true]);
         }
 
-        $nextNumber = (int) $current['number'] + 1;
+        $nextNumber = (int) $currentRound['number'] + 1;
+        // A retry may arrive after another request has already created this round.
         $existingNext = $db->prepare('SELECT id, number, letter, deadline_at FROM rounds WHERE room_id = :room_id AND number = :number');
         $existingNext->execute(['room_id' => $room['id'], 'number' => $nextNumber]);
         $nextRound = $existingNext->fetch();
         if (!$nextRound) {
-            $caller = find_room_player($db, (int) $room['id'], (int) $user['id']);
-            $speed = $lockedRoom['default_speed'];
-            $duration = (int) $lockedRoom[$speed . '_seconds'];
+            $callerRoomPlayer = find_room_player($db, (int) $room['id'], (int) $currentUser['id']);
+            $roundSpeed = $lockedRoom['default_speed'];
+            $roundDurationSeconds = (int) $lockedRoom[$roundSpeed . '_seconds'];
             $nextRoundId = create_round(
                 $db,
                 (int) $room['id'],
-                (int) $caller['id'],
+                (int) $callerRoomPlayer['id'],
                 $nextNumber,
-                $speed,
+                $roundSpeed,
                 $letter,
-                $duration
+                $roundDurationSeconds
             );
             $getNext = $db->prepare('SELECT id, number, letter, deadline_at FROM rounds WHERE id = :id');
             $getNext->execute(['id' => $nextRoundId]);

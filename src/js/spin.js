@@ -1,4 +1,5 @@
 // Spin wheel: turn a random amount, then show the letter under the pointer
+// AI assisted
 const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let turn = 0;
 

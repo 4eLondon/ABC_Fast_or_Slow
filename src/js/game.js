@@ -61,6 +61,7 @@ if (game) {
     };
 
     const syncGame = async () => {
+        // AI assisted
         if (saving) return;
         try {
             const response = await fetch(`${endpoint}?action=state&room=${encodeURIComponent(roomCode)}`);
@@ -96,6 +97,7 @@ if (game) {
     };
 
     const submitRound = async (timedOut) => {
+        // AI assisted
         if (saving || submitted || roundStopped) return;
         saving = true;
         setStatus("");
@@ -134,6 +136,7 @@ if (game) {
     };
 
     const startTimer = (seconds) => {
+        // AI assisted
         window.clearInterval(interval);
         roundEnded = false;
         roundStopped = false;

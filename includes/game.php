@@ -1,23 +1,14 @@
 <?php
-
-// Normalize a player's answer
-function normalize_answer(string $answer): string
+function normalize_answer(string $playerAnswer): string
 {
-    // Remove spaces at the beginning and end
-    $answer = trim($answer);
+    // AI assisted only for line 7 the inconv function, the rest is original code
+    $normalizedAnswer = trim($playerAnswer);
+    $normalizedAnswer = preg_replace('/\s+/u', ' ', $normalizedAnswer);
+    $asciiAnswer = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $normalizedAnswer);
 
-    // Replace multiple spaces with one space
-    $answer = preg_replace('/\s+/u', ' ', $answer);
-
-    // Remove accents from characters
-    $convertedAnswer = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $answer);
-
-    if ($convertedAnswer !== false) {
-        $answer = $convertedAnswer;
+    if ($asciiAnswer !== false) {
+        $normalizedAnswer = $asciiAnswer;
     }
 
-    // Convert the answer to lowercase
-    $answer = strtolower($answer);
-
-    return $answer;
+    return strtolower($normalizedAnswer);
 }

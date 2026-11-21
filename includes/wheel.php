@@ -1,17 +1,20 @@
 <?php
-// Spin wheel: one wedge per letter. Colours repeat in this order.
-$wc = ['red', 'tang', 'yel', 'grn', 'blue', 'teal'];
-$abc = range('A', 'Z');
-$step = 360 / 26;
-$stops = [];
-foreach ($abc as $i => $l) {
-    $stops[] = "var(--{$wc[$i % 6]}) " . round($i * $step, 2) . "deg " . round(($i + 1) * $step, 2) . "deg";
+// AI assisted
+$wheelColors = ['red', 'tang', 'yel', 'grn', 'blue', 'teal'];
+$letters = range('A', 'Z');
+$degreesPerLetter = 360 / count($letters);
+$gradientStops = [];
+foreach ($letters as $letterIndex => $letter) {
+    $startAngle = round($letterIndex * $degreesPerLetter, 2);
+    $endAngle = round(($letterIndex + 1) * $degreesPerLetter, 2);
+    $color = $wheelColors[$letterIndex % count($wheelColors)];
+    $gradientStops[] = "var(--{$color}) {$startAngle}deg {$endAngle}deg";
 }
 ?>
 <div class="wheel-box">
-    <div class="wheel" style="background: conic-gradient(<?= implode(', ', $stops) ?>)">
-        <?php foreach ($abc as $i => $l) { ?>
-            <span style="--i: <?= $i ?>"><?= $l ?></span>
+    <div class="wheel" style="background: conic-gradient(<?= implode(', ', $gradientStops) ?>)">
+        <?php foreach ($letters as $letterIndex => $letter) { ?>
+            <span style="--i: <?= $letterIndex ?>"><?= $letter ?></span>
         <?php } ?>
     </div>
     <button class="wheel-btn">Spin</button>

@@ -1,25 +1,43 @@
+
 <?php
+require_once __DIR__ . '/validation.php';
 
-require_once 'includes/validation.php';
 
-$roundLetter = "B";
+echo "<hr><h3>STOP Validation Tests</h3>";
 
-$answers = [
-    "Banana",
-    "Blue Mountain",
-    "Apple",
-    "",
-    "  Banana  "
+$categories = [
+    "Boy", "Girl", "Animal", "Place", "Food",
+    "Thing", "Brand", "Job", "Movie"
 ];
 
-foreach ($answers as $answer) {
+$completeAnswers = [
+    "Boy" => "Yohan",
+    "Girl" => "Yvonne",
+    "Animal" => "Yak",
+    "Place" => "Yemen",
+    "Food" => "Yam",
+    "Thing" => "Yo-yo",
+    "Brand" => "Yamaha",
+    "Job" => "YouTuber",
+    "Movie" => "Yesterday"
+];
 
-    if (validate_answer($answer, $roundLetter)) {
-        echo $answer . " - Valid<br>";
-    } else {
-        echo $answer . " - Invalid<br>";
-    }
+$missingAnswers = $completeAnswers;
+unset($missingAnswers["Food"]);
 
-}
+$invalidAnswers = $completeAnswers;
+$invalidAnswers["Food"] = "Apple";
+
+echo "All valid answers: ";
+echo can_player_stop($completeAnswers, $categories, "Y")
+    ? "PASS" : "FAIL";
+
+echo "<br>Missing answer: ";
+echo !can_player_stop($missingAnswers, $categories, "Y")
+    ? "PASS" : "FAIL";
+
+echo "<br>Incorrect starting letter: ";
+echo !can_player_stop($invalidAnswers, $categories, "Y")
+    ? "PASS" : "FAIL";
 
 ?>

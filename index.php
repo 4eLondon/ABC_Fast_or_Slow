@@ -1,31 +1,25 @@
 <?php
-$title = "ABC Fast or Slow";
-$cats = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'Place' => 'plum'];
-$ex = ['Mike', 'Mia', 'Mug', 'Mango', 'Mexico'];
+$pageTitle = 'ABC Fast or Slow';
+$categoryColors = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'Place' => 'plum'];
+$exampleAnswers = ['Boy' => 'Mike', 'Girl' => 'Mia', 'Thing' => 'Mug', 'Food' => 'Mango', 'Place' => 'Mexico'];
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title><?= $title ?></title>
+    <title><?= $pageTitle ?></title>
     <link rel="stylesheet" href="src/css/classes.css">
     <link rel="stylesheet" href="src/css/style.css">
 </head>
 
 <body>
     <div id="master" class="flex-col g-1 w-page screen-full p-2">
-
-
-        <!-- [ Hero section ] -->
         <section class="crate bg-wht" id="hero">
             <h1 id="hero_title">ABC<br>Fast or Slow</h1>
             <div class="stripes"></div>
         </section>
 
-
-
-        <!-- [ Buttons for starting games ] -->
         <div class="flex-row g-1" id="hero_buttons">
             <a class="crate bg-red" href="pages/lobby.php?m=local">
                 <span class="crate-code">L01</span>
@@ -39,9 +33,6 @@ $ex = ['Mike', 'Mia', 'Mug', 'Mango', 'Mexico'];
             </a>
         </div>
 
-
-
-        <!-- [ Guide on how to play, with example cards for the letter M ] -->
         <section class="crate bg-teal" id="guide">
             <div class="flex-col g-1">
                 <h2>How to play</h2>
@@ -52,26 +43,27 @@ $ex = ['Mike', 'Mia', 'Mug', 'Mango', 'Mexico'];
                 </ul>
             </div>
             <div id="guide_cards">
-                <?php $lw = '7rem';
-                $let = 'M';
+                <?php $cardWidth = '7rem';
+                $cardLetter = 'M';
                 include 'includes/lcard.php'; ?>
-                <?php foreach ($cats as $n => $c) { ?>
-                    <div class="card mini c-<?= $c ?>">
-                        <span class="flex-col ele-center-hori card-strip"><?= $n[0] ?></span>
+                <?php foreach ($categoryColors as $categoryName => $categoryColor) { ?>
+                    <div class="card mini c-<?= $categoryColor ?>">
+                        <span class="flex-col ele-center-hori card-strip"><?= $categoryName[0] ?></span>
                         <div class="flex-col ele-center g-1 card-body">
-                            <span class="card-name"><?= $n ?></span>
-                            <span class="card-ans"><?= $ex[array_search($n, array_keys($cats))] ?></span>
+                            <span class="card-name"><?= $categoryName ?></span>
+                            <span class="card-ans"><?= $exampleAnswers[$categoryName] ?></span>
                         </div>
                     </div>
                 <?php } ?>
             </div>
         </section>
 
-
-
-        <!-- [ Misc footer details ] -->
         <section id="footer">
             ABC Fast or Slow
+            <span> | </span>
+            <a href="pages/auth.php?mode=login">Sign in</a>
+            <span> | </span>
+            <a href="pages/auth.php?mode=register">Create account</a>
         </section>
 
     </div>

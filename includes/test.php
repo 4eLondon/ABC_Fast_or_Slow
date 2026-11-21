@@ -1,33 +1,43 @@
+
 <?php
-require_once 'validation.php';
-require_once 'db.php';
+require_once __DIR__ . '/validation.php';
 
 
-var_dump(validate_answer("Jamaica", "J"));
-var_dump(validate_answer("Kingston", "J"));
-var_dump(validate_answer("", "J"));
-var_dump(validate_answer("Jamaica", "AB"));
+echo "<hr><h3>STOP Validation Tests</h3>";
 
-echo "<br><br>";
-    $categories = ["Country", "City", "Food"];
+$categories = [
+    "Boy", "Girl", "Animal", "Place", "Food",
+    "Thing", "Brand", "Job", "Movie"
+];
 
-    $answers = [
-        "Country" => "Jamaica",
-        "City" => "Jerusalem",
-        "Food" => "Jerk Chicken"
-    ];
+$completeAnswers = [
+    "Boy" => "Yohan",
+    "Girl" => "Yvonne",
+    "Animal" => "Yak",
+    "Place" => "Yemen",
+    "Food" => "Yam",
+    "Thing" => "Yo-yo",
+    "Brand" => "Yamaha",
+    "Job" => "YouTuber",
+    "Movie" => "Yesterday"
+];
 
-    var_dump(can_player_stop($answers, $categories, "J"));
+$missingAnswers = $completeAnswers;
+unset($missingAnswers["Food"]);
 
-    $answers["Food"] = "";
-    var_dump(can_player_stop($answers, $categories, "J"));
+$invalidAnswers = $completeAnswers;
+$invalidAnswers["Food"] = "Apple";
 
-    $answers["Food"] = "Jerk Chicken";
-    $answers["City"] = "Kingston";
-    var_dump(can_player_stop($answers, $categories, "J"));
+echo "All valid answers: ";
+echo can_player_stop($completeAnswers, $categories, "Y")
+    ? "PASS" : "FAIL";
 
+echo "<br>Missing answer: ";
+echo !can_player_stop($missingAnswers, $categories, "Y")
+    ? "PASS" : "FAIL";
 
-    echo "<br><br>";
-    var_dump(stop_round($conn, 1, 1, "invalid"));
+echo "<br>Incorrect starting letter: ";
+echo !can_player_stop($invalidAnswers, $categories, "Y")
+    ? "PASS" : "FAIL";
 
 ?>

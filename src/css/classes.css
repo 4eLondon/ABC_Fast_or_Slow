@@ -280,6 +280,31 @@
     transform: skewX(-15deg);
 }
 
+
+.button-reroll-small {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 0.5rem;
+    padding-block: 0.2rem;
+    border: 0.2rem var(--bg) solid;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    text-align: center;
+    transition: scale 0.2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+}
+
+.button-reroll-small:hover {
+    box-shadow: 0.5rem 0.5rem var(--bg);
+}
+
+.button-reroll-small:active {
+    scale: 90%;
+    opacity: 0.1;
+    transform: translateY(0.2rem);
+}
+
 /* x o x     [ Input ]      x o x */
 
 

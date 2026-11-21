@@ -4,6 +4,7 @@ $pageTitle = "Host game";
 $startingLetter = "A";
 $roomKey = "1234";
 $username = "player";
+$rerollSpeed = "Fast";
 ?>
 
 <!DOCTYPE HTML>
@@ -38,14 +39,20 @@ $username = "player";
             </div>
 
 
-
-            <div id="card" class="flex-col items-center">
-                <h2 class="txt-condition" id="cardGuide">Starting letter</h2>
+            <div id="card" class="flex-col gap-1">
+                <span class="flex-row items-center gap-1">
+                    <h2 class="txt-condition" id="cardGuide">Pick starting letter</h2>
+                    <button class="button-reroll-small flex-row items-center txt-regular-4" style="gap:0.3rem">
+                        <img src="../assets/icons/icon-fast-green.svg" class="icon">
+                        <h3 class="accent-4-txt" style="margin: 0;"><?= $rerollSpeed ?></h3>
+                    </button>
+                </span>
                 <button class="card-display accent-4-txt txt-condition flex-col items-center">
                     <h1 id="letter"><?= $startingLetter ?></h1>
                 </button>
-            </div>
+                </span>
 
+            </div>
 
             <div id="roomKey" class="">
                 <form>

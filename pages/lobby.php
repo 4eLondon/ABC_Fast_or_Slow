@@ -3,7 +3,8 @@ require __DIR__ . '/../includes/components.php';
 $pageTitle = "Local Lobby";;
 $username = "Player 1";
 $letter = "A";
-?>
+$rerollSpeed = "fast";
+?>i
 
 <!DOCTYPE HTML>
 <html>
@@ -35,8 +36,15 @@ $letter = "A";
                 </button>
             </div>
 
-            <div id="card">
-                <h2 class="txt-condition" id="cardGuide">Click to reroll</h2>
+            <div id="card" class="flex-col gap-1">
+                <span class="flex-row items-center gap-1">
+                    <h2 class="txt-condition" id="cardGuide">Click to reroll</h2>
+                    <button class="button-reroll-small flex-row items-center txt-regular-4" style="gap:0.3rem">
+                        <img src="../assets/icons/icon-fast-yellow.svg" class="icon">
+                        <h3 class="accent-2-txt" style="margin: 0;"><?= $rerollSpeed ?></h3>
+                    </button>
+
+                </span>
                 <button class="card-display txt-condition accent-2-txt flex-col items-center">
                     <h1 id="letter"><?= $letter ?></h1>
                 </button>
@@ -55,34 +63,6 @@ $letter = "A";
                         </button>
                     </li>
 
-
-                    <li>
-                        <button class="button-new-player flex-row gap-1 items-center">
-                            <img src="../assets/icons/icon-player-yellow.svg" class="icon">
-                            <h2 class="txt-regular-4" id="hostPlayerID"><?= $username ?></h2>
-                        </button>
-                    </li>
-
-                    <li>
-                        <button class="button-new-player flex-row gap-1 items-center">
-                            <img src="../assets/icons/icon-player-yellow.svg" class="icon">
-                            <h2 class="txt-regular-4" id="hostPlayerID"><?= $username ?></h2>
-                        </button>
-                    </li>
-
-                    <li>
-                        <button class="button-new-player flex-row gap-1 items-center">
-                            <img src="../assets/icons/icon-player-yellow.svg" class="icon">
-                            <h2 class="txt-regular-4" id="hostPlayerID"><?= $username ?></h2>
-                        </button>
-                    </li>
-
-                    <li>
-                        <button class="button-new-player flex-row gap-1 items-center">
-                            <img src="../assets/icons/icon-player-yellow.svg" class="icon">
-                            <h2 class="txt-regular-4" id="hostPlayerID"><?= $username ?></h2>
-                        </button>
-                    </li>
 
                     <li>
                         <button class="button-new-player flex-row gap-1 items-center">

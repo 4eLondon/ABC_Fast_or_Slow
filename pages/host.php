@@ -60,9 +60,9 @@ $rerollSpeed = "Fast";
                         <li class="flex-col gap-4">
                             <span>
                                 <h1 class="txt-condition" style="font-size: 4rem; margin-bottom: 0;">New Room</h1>
-                                <input type="text" class="input-text-new-player-alt txt-regular-4" name="field_roomkey" maxlength="8" placeholder="Create a room key ( 4-8 digits )">
+                                <input type="text" class="input-text-new-player-alt txt-regular-4" name="field_roomkey" maxlength="8" placeholder="Room Key xxxx-xxxx" readonly>
                             </span>
-                            <button type="submit" class="button-new-player-alt" id="button_submit_key">OK</button>
+                            <button type="submit" class="button-new-player-alt" id="button_submit_key">Generate</button>
                         </li>
 
                     </ul>

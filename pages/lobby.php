@@ -4,7 +4,7 @@ $pageTitle = "Local Lobby";;
 $username = "Player 1";
 $letter = "A";
 $rerollSpeed = "fast";
-?>i
+?>
 
 <!DOCTYPE HTML>
 <html>

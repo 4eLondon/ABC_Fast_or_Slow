@@ -3,6 +3,8 @@ require __DIR__ . '/../includes/components.php';
 $pageTitle = "Summary";
 $username = "Player";
 $score = 1000;
+$startingLetter = "A";
+$rerollSpeed = "Fast";
 ?>
 
 <!DOCTYPE HTML>
@@ -120,13 +122,31 @@ $score = 1000;
 
 
 
-            <div id="hero" class="txt-condition flex-col gap-1 items-center">
-                <h1 class="hero-text" style="margin: 0;">Next Round</h1>
+            <div id="hero" class="txt-condition flex-col gap-4 items-center">
 
-                <button class="button-start-game flex-row items-center gap-1">
-                    <img src="../assets/icons/icon-play-red.svg" class="button-start-game-text icon">
-                    <h2 class="txt-regular-4 button-start-game-text accent-1-txt" style="color:var(--a1);">Start</h2>
-                </button>
+                <div id="card" class="flex-col gap-1">
+                    <span class="flex-row items-center gap-1">
+                        <h2 class="txt-condition" id="cardGuide">Reroll</h2>
+                        <button class="button-reroll-small flex-row items-center txt-regular-4" style="gap:0.3rem">
+                            <img src="../assets/icons/icon-fast-red.svg" class="icon">
+                            <h3 class="accent-1-txt" style="margin: 0;"><?= $rerollSpeed ?></h3>
+                        </button>
+                    </span>
+                    <button class="card-display accent-1-txt txt-condition flex-col items-center">
+                        <h1 id="letter"><?= $startingLetter ?></h1>
+                    </button>
+                    </span>
+
+                </div>
+
+                <div>
+                    <h1 class="hero-text" style="margin: 0;">Next Round</h1>
+
+                    <button class="button-start-game flex-row items-center gap-1">
+                        <img src="../assets/icons/icon-play-red.svg" class="button-start-game-text icon">
+                        <h2 class="txt-regular-4 button-start-game-text accent-1-txt" style="color:var(--a1);">Start</h2>
+                    </button>
+                </div>
             </div>
 
         </section>

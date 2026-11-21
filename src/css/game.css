@@ -68,3 +68,17 @@
     font-size: 4rem;
     animation: txt 5s ease infinite;
 }
+
+
+
+
+#cardGuide {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+
+#letter {
+    font-size: 8rem;
+    color: var(--a1);
+}

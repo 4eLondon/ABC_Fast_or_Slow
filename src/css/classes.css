@@ -368,6 +368,50 @@
     background-color: var(--fg);
 }
 
+.card-small {
+    height: fit-content;
+    width: fit-content;
+    border-radius: 2rem;
+    padding-block: 5rem;
+    padding-inline: 2rem;
+}
+
+.card-small img {
+    width: fit-content;
+    height: 5rem;
+}
+
+.card-small-back-1 {
+    background: url(../../assets/backgrounds/card1.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-2 {
+    background: url(../../assets/backgrounds/card2.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-3 {
+    background: url(../../assets/backgrounds/card3.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-4 {
+    background: url(../../assets/backgrounds/card4.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-5 {
+    background: url(../../assets/backgrounds/card5.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-6 {
+    background: url(../../assets/backgrounds/card6.svg);
+    opacity: 0.8;
+}
+
+
 
 
 /* x o x     [ Decals ]      x o x */
@@ -418,9 +462,6 @@
     background-color: var(--a6);
 }
 
-.accent-7:hover {
-    background-color: var(--a7);
-}
 
 
 
@@ -452,27 +493,34 @@
     color: var(--a6);
 }
 
-.accent-7-txt:hover {
-    color: var(--a7);
+
+
+
+
+.navi {
+    transition: scale 1.2s;
+}
+
+.navi:hover {
+    scale: 109%;
 }
 
 
-
-#navi {
-    transition: scale 0.2s;
-}
-
-#navi:hover {
-    scale: 110%;
-}
-
-
-#naviInner {
+.naviInner {
     color: var(--fg);
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
-#naviInner img {
-    height: 2rem;
-    width: 2rem;
+.foot {
+    transition: scale 1.2s;
+}
+
+.foot:hover {
+    scale: 109%;
+}
+
+
+.footInner {
+    color: var(--fg);
+    font-size: 1rem;
 }

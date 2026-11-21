@@ -1,5 +1,6 @@
 <?php
-$pageTitle = "Local Lobby";
+require __DIR__ . '/../includes/components.php';
+$pageTitle = "Game";
 ?>
 
 <!DOCTYPE HTML>
@@ -7,7 +8,9 @@ $pageTitle = "Local Lobby";
 
 <head>
     <title><?= $pageTitle ?></title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../src/css/master.css">
+    <link rel="stylesheet" href="../src/css/classes.css:">
+    <?php drawFavicon() ?>
 </head>
 
 <body>
@@ -26,24 +29,7 @@ $pageTitle = "Local Lobby";
         <!-------------------------------------------------------|
              x x x x x x x x [ Decals Section ] x x x x x x x x x 
         |-------------------------------------------------------->
-
-        <section id="decals" class="fill flex-col items-center-horizontal">
-            <nav class="fullscreen-width film-bar lock-top flex-row items-center">
-
-                <a href="../index.php" id="navi">
-                    <div id="naviInner" class="flex-row txt-regular-4 gap-1 items-center-vertical">
-                        <img src="../assets/icons/icon-home-dark.svg">
-                        <h2>Home</h2>
-                    </div>
-                </a>
-
-            </nav>
-
-            <footer class="fullscreen-width film-bar lock-bot">
-
-            </footer>
-        </section>
-
+        <?php drawDecals(1); ?>
 
     </div>
 

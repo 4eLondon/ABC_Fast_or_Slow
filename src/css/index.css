@@ -31,3 +31,21 @@
     font-size: 8rem;
     line-height: 8rem;
 }
+
+#guide {
+    margin-top: 4%;
+}
+
+#howtoBanner {
+    margin: 0;
+}
+
+#menuTextBoldAlt {
+    font-size: 5rem;
+    line-height: 8rem;
+}
+
+#menuTextAlt {
+    font-size: 3rem;
+    margin-bottom: 0;
+}

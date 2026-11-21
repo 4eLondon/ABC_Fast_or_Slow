@@ -12,6 +12,7 @@ $userAccountStatus = "Not Logged in";
     <link rel="stylesheet" href="src/css/master.css">
     <link rel="stylesheet" href="src/css/classes.css">
     <link rel="stylesheet" href="src/css/index.css">
+    <link rel='icon' type='image/x-icon' href='assets/icons/favicon.svg'>
 </head>
 
 <body>
@@ -62,19 +63,24 @@ $userAccountStatus = "Not Logged in";
         |-------------------------------------------------------->
 
         <section id="decals" class="fill flex-col items-center-horizontal">
-            <nav class="fullscreen-width film-bar lock-top flex-row items-center">
 
-                <a href="pages/auth.php" id="navi">
-                    <div id="naviInner" class="flex-row txt-regular-4 gap-1 items-center-vertical">
-                        <img src="assets/icons/icon-account-dark.svg">
+            <nav class="fullscreen-width film-bar lock-top flex-row items-center">
+                <a href="pages/auth.php" class="navi">
+                    <div class="naviInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-account-dark.svg">
                         <h2><?= $userAccountStatus ?></h2>
                     </div>
                 </a>
 
             </nav>
 
-            <footer class="fullscreen-width film-bar lock-bot">
-
+            <footer class="fullscreen-width film-bar lock-bot flex-row items-center">
+                <a href="pages/guide.php" class="foot">
+                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-about-dark.svg">
+                        <h2>How to play</h2>
+                    </div>
+                </a>
             </footer>
         </section>
 

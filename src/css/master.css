@@ -6,6 +6,7 @@
 body {
     padding: 0;
     margin: 0;
+    overflow-y: hidden;
 }
 
 a {
@@ -30,8 +31,8 @@ li {
     --a2: #fcad1c;
     --a3: #03b6cc;
     --a4: #86c35b;
-    --a6: #f38eba;
-    --a7: #b0afd7;
+    --a5: #f38eba;
+    --a6: #b0afd7;
 }
 
 

@@ -1,6 +1,6 @@
 <?php
-$pageTitle = "Local Lobby";
-$userAccountStatus = "Not Logged in";
+require __DIR__ . '/../includes/components.php';
+$pageTitle = "Local Lobby";;
 $username = "Player 1";
 $letter = "A";
 ?>
@@ -13,6 +13,7 @@ $letter = "A";
     <link rel="stylesheet" href="../src/css/classes.css">
     <link rel="stylesheet" href="../src/css/master.css">
     <link rel="stylesheet" href="../src/css/lobby.css">
+    <?php drawFavicon() ?>
 </head>
 
 <body>
@@ -108,29 +109,8 @@ $letter = "A";
         <!-------------------------------------------------------|
              x x x x x x x x [ Decals Section ] x x x x x x x x x 
         |-------------------------------------------------------->
+        <?php drawDecals(2); ?>
 
-        <section id="decals" class="fill flex-row gap-2 items-center-horizontal">
-            <nav class="fullscreen-width film-bar lock-top gap-2 flex-row items-center">
-
-                <a href="../index.php" id="navi">
-                    <div id="naviInner" class="flex-row txt-regular-4 gap-1 items-center-vertical">
-                        <img src="../assets/icons/icon-home-dark.svg">
-                        <h2>Home</h2>
-                    </div>
-                </a>
-
-                <a href="../pages/auth.php" id="navi">
-                    <div id="naviInner" class="flex-row txt-regular-4 gap-1 items-center-vertical">
-                        <img src="../assets/icons/icon-account-dark.svg">
-                        <h2><?= $userAccountStatus ?></h2>
-                    </div>
-                </a>
-            </nav>
-
-            <footer class="fullscreen-width film-bar lock-bot">
-
-            </footer>
-        </section>
 
 
     </div>

@@ -24,27 +24,27 @@ function load_rooms()
     return $rooms;
 }
 
-function save_rooms($rooms)
+function save_rooms($roomList)
 {
-    $contents = json_encode($rooms, JSON_PRETTY_PRINT);
+    $contents = json_encode($roomList, JSON_PRETTY_PRINT);
     if ($contents === false || file_put_contents(rooms_file(), $contents, LOCK_EX) === false) {
         throw new RuntimeException('Could not save the room list.');
     }
 }
 
-function new_room_code($rooms)
+function new_room_code($existingRooms)
 {
     do {
         $code = '';
         for ($i = 0; $i < 4; $i++) {
             $code .= chr(random_int(65, 90));
         }
-    } while (isset($rooms[$code]));
+    } while (isset($existingRooms[$code]));
 
     return $code;
 }
 
-function escape_html($value)
+function escape_html($valueToEscape)
 {
-    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string) $valueToEscape, ENT_QUOTES, 'UTF-8');
 }

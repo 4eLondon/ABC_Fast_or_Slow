@@ -13,9 +13,9 @@ function csrf_token(): string
 
 function verify_csrf_token(): bool
 {
-    $submitted = $_POST['csrf_token'] ?? '';
-    return is_string($submitted) && isset($_SESSION['csrf_token'])
-        && hash_equals($_SESSION['csrf_token'], $submitted);
+    $submittedToken = $_POST['csrf_token'] ?? '';
+    return is_string($submittedToken) && isset($_SESSION['csrf_token'])
+        && hash_equals($_SESSION['csrf_token'], $submittedToken);
 }
 
 function current_user(PDO $db): ?array
@@ -37,11 +37,13 @@ function current_user(PDO $db): ?array
     return $user;
 }
 
-function auth_redirect_target(string $target): string
+function auth_redirect_target(string $redirectTarget): string
 {
-    if (preg_match('/^lobby\.php(?:\?[A-Za-z0-9_=&%-]*)?$/', $target)
-        || preg_match('/^game\.php\?room=[A-Z]{4}$/', $target)) {
-        return $target;
+    // AI assisted
+    // Keep sign-in redirects inside the app instead of sending users to arbitrary sites.
+    if (preg_match('/^lobby\.php(?:\?[A-Za-z0-9_=&%-]*)?$/', $redirectTarget)
+        || preg_match('/^game\.php\?room=[A-Z]{4}$/', $redirectTarget)) {
+        return $redirectTarget;
     }
 
     return '../index.php';

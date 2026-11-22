@@ -4,26 +4,27 @@ require_once __DIR__ . '/database.php';
 
 function game_categories(PDO $db): array
 {
-    $order = ['Boy', 'Girl', 'Thing', 'Food', 'Place'];
+    $categoryLabels = ['Boy', 'Girl', 'Thing', 'Food', 'Place'];
     $statement = $db->prepare(
         'SELECT id, label FROM categories WHERE is_active = 1 AND label IN (?, ?, ?, ?, ?)'
     );
-    $statement->execute($order);
-    $categories = $statement->fetchAll();
-    $byLabel = [];
-    foreach ($categories as $category) {
-        $byLabel[$category['label']] = $category;
+    $statement->execute($categoryLabels);
+    $activeCategories = $statement->fetchAll();
+    $categoriesByLabel = [];
+    foreach ($activeCategories as $category) {
+        $categoriesByLabel[$category['label']] = $category;
     }
 
-    foreach ($order as $label) {
-        if (!isset($byLabel[$label])) {
-            throw new RuntimeException("The active database categories are missing {$label}.");
+    // A room needs all five categories, so don't create one with an incomplete set.
+    foreach ($categoryLabels as $categoryLabel) {
+        if (!isset($categoriesByLabel[$categoryLabel])) {
+            throw new RuntimeException("The active database categories are missing {$categoryLabel}.");
         }
     }
 
-    return array_map(static function (string $label) use ($byLabel): array {
-        return $byLabel[$label];
-    }, $order);
+    return array_map(static function (string $categoryLabel) use ($categoriesByLabel): array {
+        return $categoriesByLabel[$categoryLabel];
+    }, $categoryLabels);
 }
 
 function find_room(PDO $db, string $code): ?array
@@ -80,6 +81,8 @@ function find_room_player(PDO $db, int $roomId, int $userId): ?array
 
 function join_room(PDO $db, int $roomId, int $userId): void
 {
+    // AI assisted lines 84 - 99
+    // Lock the room while checking capacity so two joins can't take the last spot.
     $db->beginTransaction();
     try {
         $lock = $db->prepare('SELECT status FROM rooms WHERE id = :id FOR UPDATE');
@@ -118,6 +121,7 @@ function join_room(PDO $db, int $roomId, int $userId): void
 
 function leave_room(PDO $db, string $code, int $userId): void
 {
+    // AI assisted
     $db->beginTransaction();
     try {
         $lock = $db->prepare('SELECT id, host_id FROM rooms WHERE code = :code FOR UPDATE');
@@ -137,6 +141,7 @@ function leave_room(PDO $db, string $code, int $userId): void
         $leave = $db->prepare('UPDATE room_players SET left_at = UTC_TIMESTAMP() WHERE id = :id');
         $leave->execute(['id' => $player['id']]);
 
+        // The next player in line becomes host if the current host leaves.
         $remaining = $db->prepare(
             'SELECT user_id FROM room_players
              WHERE room_id = :room_id AND left_at IS NULL ORDER BY joined_at, id LIMIT 1'
@@ -178,8 +183,10 @@ function generate_room_code(PDO $db): string
 
 function create_room(PDO $db, int $userId, bool $local, int $rounds, string $speed, string $letter): string
 {
+    
     $categories = game_categories($db);
     $code = generate_room_code($db);
+    // Save the room and its related records together so setup can't be left half-finished.
     $db->beginTransaction();
 
     try {
@@ -223,7 +230,8 @@ function create_room(PDO $db, int $userId, bool $local, int $rounds, string $spe
     return $code;
 }
 
-function create_round(PDO $db, int $roomId, int $callerId, int $number, string $speed, string $letter, int $seconds): int
+// caller_id refers to room_players.id, not users.id.
+function create_round(PDO $db, int $roomId, int $callerRoomPlayerId, int $roundNumber, string $speed, string $letter, int $durationInSeconds): int
 {
     $startedAt = time();
     $insert = $db->prepare(
@@ -232,12 +240,12 @@ function create_round(PDO $db, int $roomId, int $callerId, int $number, string $
     );
     $insert->execute([
         'room_id' => $roomId,
-        'number' => $number,
-        'caller_id' => $callerId,
+        'number' => $roundNumber,
+        'caller_id' => $callerRoomPlayerId,
         'speed' => $speed,
         'letter' => $letter,
         'started_at' => gmdate('Y-m-d H:i:s', $startedAt),
-        'deadline_at' => gmdate('Y-m-d H:i:s', $startedAt + $seconds),
+        'deadline_at' => gmdate('Y-m-d H:i:s', $startedAt + $durationInSeconds),
     ]);
 
     return (int) $db->lastInsertId();
@@ -245,6 +253,8 @@ function create_round(PDO $db, int $roomId, int $callerId, int $number, string $
 
 function start_room(PDO $db, array $room, int $userId, string $letter): void
 {
+    // AI assisted lines 256 - 270
+    // Recheck the host and room status while the room row is locked.
     $db->beginTransaction();
     try {
         $lock = $db->prepare('SELECT status, host_id, total_rounds, default_speed, fast_seconds, slow_seconds FROM rooms WHERE id = :id FOR UPDATE');

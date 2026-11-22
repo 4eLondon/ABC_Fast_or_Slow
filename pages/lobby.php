@@ -11,6 +11,7 @@ $rerollSpeed = "fast";
 
 <head>
     <title><?= $pageTitle ?></title>
+    <title><?= $pageTitle ?></title>
     <link rel="stylesheet" href="../src/css/classes.css">
     <link rel="stylesheet" href="../src/css/master.css">
     <link rel="stylesheet" href="../src/css/lobby.css">

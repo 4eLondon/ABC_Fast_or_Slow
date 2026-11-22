@@ -8,6 +8,7 @@ $pageTitle = "How to play";
 
 <head>
     <title><?= $pageTitle ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../src/css/classes.css">
     <link rel="stylesheet" href="../src/css/master.css">
     <link rel="stylesheet" href="../src/css/index.css">

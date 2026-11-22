@@ -1,12 +1,18 @@
 /* - - - - - - - - - - - - - - - -
     [ Global overrides ]
  - - - - - - - - - - - - - - - - */
+/* Assisted here to help with consistent scaling across machines */
+html {
+    font-size: max(10px, min(calc(100vw / 120), calc(100dvh / 67.5)));
+}
+
 
 
 body {
     padding: 0;
     margin: 0;
     overflow-y: hidden;
+    font-size: 1rem;
 }
 
 a {

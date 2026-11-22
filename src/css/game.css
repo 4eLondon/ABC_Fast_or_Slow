@@ -5,7 +5,7 @@
     background-image: url(../../assets/backgrounds/bg6.svg);
     background-size: 60% 100%;
     background-repeat: repeat;
-    animation: bg 30s ease-in-out infinite;
+    animation: bg 30s linear infinite;
 }
 
 
@@ -17,10 +17,8 @@
     }
 
     to {
-        background-position: -1920px 0;
+        background-position: -100vw -90vh;
     }
-
-
 }
 
 

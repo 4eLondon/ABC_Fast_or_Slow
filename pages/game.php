@@ -84,7 +84,11 @@ $pageTitle = "Game";
 
             </div>
 
-            <h3 id="tip" class="txt-regular-2">Tip: You can skip to the next card by pressing enter</h3>/
+            <div class="flex-col items-center gap-2" id="tip">
+                <button type="submit" class="button-new-player-alt" id="button_submit_key">Lock in</button>
+                <h3 class="txt-regular-2" style="margin: 0;">Tip: You can skip to the next card by pressing enter</h3>
+            </div>
+
         </section>
 
 

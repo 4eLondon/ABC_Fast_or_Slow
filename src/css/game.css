@@ -43,7 +43,7 @@
 
 #tip {
     position: absolute;
-    bottom: 15%;
+    bottom: 10%;
     font-size: 1.2rem;
 }
 
@@ -81,4 +81,14 @@
 #letter {
     font-size: 8rem;
     color: var(--a1);
+}
+
+#button_submit_key {
+    height: fit-content;
+    width: fit-content;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    font-size: 1rem;
 }

@@ -37,7 +37,7 @@ $pageTitle = "How to play";
                 <h2 id="howtoBanner" class="txt-color">How to play the game</h2>
 
 
-                <div class="flex-row gap-1">
+                <div class="flex-row gap-4">
 
                     <div class="flex-col items-center card-small card-small-back-1">
                         <img src="../assets/icons/icon-male-white.svg">

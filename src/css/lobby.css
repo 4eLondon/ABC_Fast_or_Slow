@@ -2,8 +2,8 @@
         [ Lobby page ]
  - - - - - - - - - - - - - - - - */
 #master {
-    background-image: url(../../assets/backgrounds/bg3.svg);
-    background-size: auto 10%;
+    background-image: url(../../assets/backgrounds/screen0.svg);
+    background-size: auto 90%;
     background-repeat: repeat;
     animation: bg 30s linear infinite;
 }

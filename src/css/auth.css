@@ -2,7 +2,7 @@
         [ Auth page ]
  - - - - - - - - - - - - - - - - */
 #master {
-    background-image: url(../../assets/backgrounds/bg2.svg);
+    background-image: url(../../assets/backgrounds/screen3.svg);
     background-size: 5% 6%;
     background-repeat: repeat;
     animation: bg 20s linear infinite;
@@ -53,9 +53,16 @@
     font-size: 1.3rem;
 }
 
+.form-error {
+    margin: 0;
+    color: var(--a1);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
 /* Assist Here */
 #login:target {
-    display: block;
+    display: flex;
 }
 
 #login:target+#signup {
@@ -63,7 +70,7 @@
 }
 
 #signup:target {
-    display: block;
+    display: flex;
 }
 
 #signup:target+#login {

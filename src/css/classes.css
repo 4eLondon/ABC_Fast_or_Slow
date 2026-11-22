@@ -125,7 +125,7 @@
 }
 
 
-.button-classic,
+.button-classic:hover,
 .button-classic-alt:hover {
     box-shadow: gray 0.5rem 0.5rem;
     margin-block: 0.5rem;
@@ -249,7 +249,8 @@
 .button-start-game {
     border: none;
     height: fit-content;
-    width: 20rem;
+    min-width: 20rem;
+    width: fit-content;
     background: none;
     padding-inline: 1rem;
     padding-block: 0.5rem;
@@ -278,6 +279,13 @@
     margin: 0;
     font-size: 2rem;
     transform: skewX(-15deg);
+}
+
+.button-start-game:disabled,
+.button-new-player:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    scale: 100%;
 }
 
 
@@ -536,7 +544,12 @@
     height: 1.5rem;
 }
 
-
+.hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
 
 .film-bar {
     background-color: var(--bg);
@@ -631,6 +644,13 @@
     color: var(--a6);
 }
 
+.accent-bg-txt {
+    color: var(--bg);
+}
+
+.accent-fg-txt {
+    color: var(--fg);
+}
 
 .accent-0-txt {
     color: var(--a0);

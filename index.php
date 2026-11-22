@@ -1,7 +1,6 @@
 <?php
+require __DIR__ . '/includes/account.php';
 $pageTitle = "ABC Fast or Slow";
-$userAccount = "Sign up / Log in";
-$userAccountStatus = "Not Logged in";
 ?>
 
 <!DOCTYPE HTML>
@@ -43,15 +42,7 @@ $userAccountStatus = "Not Logged in";
                     </li>
 
                     <li>
-                        <a href="pages/multiplayer.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-3"><img src="assets/icons/icon-join-online-light.svg" class="button-classic-icon"> Join online game</a>
-                    </li>
-
-                    <li>
-                        <a href="pages/host.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-4"><img src="assets/icons/icon-host-room-light.svg" class="button-classic-icon"> Host online room</a>
-                    </li>
-
-                    <li>
-                        <a href="pages/auth.php" class="button-classic flex-row items-center-vertical gap-1 txt-title accent-7"><img src="assets/icons/icon-auth-light.svg" class="button-classic-icon"> <?= $userAccount ?></a>
+                        <a href="<?= $userAccountLink ?>" class="button-classic flex-row items-center-vertical gap-1 txt-title accent-7"><img src="assets/icons/icon-auth-light.svg" class="button-classic-icon"> <?= $userAccount ?></a>
                     </li>
                 </ul>
             </div>
@@ -66,10 +57,10 @@ $userAccountStatus = "Not Logged in";
         <section id="decals" class="fill flex-col items-center-horizontal">
 
             <nav class="fullscreen-width film-bar lock-top flex-row items-center">
-                <a href="pages/auth.php" class="navi">
+                <a href="<?= $userAccountLink ?>" class="navi">
                     <div class="naviInner flex-row txt-regular-4 gap-1 items-center-vertical">
                         <img class="icon" src="assets/icons/icon-account-dark.svg">
-                        <h2><?= $userAccountStatus ?></h2>
+                        <h2><?= htmlspecialchars($userAccountStatus) ?></h2>
                     </div>
                 </a>
 
@@ -82,27 +73,6 @@ $userAccountStatus = "Not Logged in";
                         <h2>How to play</h2>
                     </div>
                 </a>
-
-
-
-
-
-                <a href="pages/game.php" class="foot">
-                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
-                        <img class="icon" src="assets/icons/icon-ready-blue.svg">
-                        <h2>Testing: Game</h2>
-                    </div>
-                </a>
-
-                <a href="pages/summary.php" class="foot">
-                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
-                        <img class="icon" src="assets/icons/icon-ready-green.svg">
-                        <h2>Testing: Summary</h2>
-                    </div>
-                </a>
-
-
-
 
             </footer>
         </section>

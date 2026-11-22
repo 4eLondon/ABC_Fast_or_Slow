@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ABC Fast or Slow
 
 ## Local setup
@@ -49,6 +48,3 @@ JOIN users u ON u.id = rp.user_id
 JOIN categories c ON c.id = a.category_id
 ORDER BY rd.id DESC, c.id;
 ```
-=======
-REad me 
->>>>>>> 0216423bffafc262d92912f80803ad0ea4326403

@@ -1,70 +1,112 @@
 <?php
-$pageTitle = 'ABC Fast or Slow';
-$categoryColors = ['Boy' => 'blue', 'Girl' => 'red', 'Thing' => 'yel', 'Food' => 'grn', 'Place' => 'plum'];
-$exampleAnswers = ['Boy' => 'Mike', 'Girl' => 'Mia', 'Thing' => 'Mug', 'Food' => 'Mango', 'Place' => 'Mexico'];
+$pageTitle = "ABC Fast or Slow";
+$userAccount = "Sign up / Log in";
+$userAccountStatus = "Not Logged in";
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 
 <head>
     <title><?= $pageTitle ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="src/css/master.css">
     <link rel="stylesheet" href="src/css/classes.css">
-    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/index.css">
+    <link rel='icon' type='image/x-icon' href='assets/icons/favicon.svg'>
 </head>
 
 <body>
-    <div id="master" class="flex-col g-1 w-page screen-full p-2">
-        <section class="crate bg-wht" id="hero">
-            <h1 id="hero_title">ABC<br>Fast or Slow</h1>
-            <div class="stripes"></div>
-        </section>
 
-        <div class="flex-row g-1" id="hero_buttons">
-            <a class="crate bg-red" href="pages/lobby.php?m=local">
-                <span class="crate-code">L01</span>
-                <span class="crate-name">New local game</span>
-                <div class="diamond"></div>
-            </a>
-            <a class="crate bg-blue" href="pages/lobby.php?m=multi">
-                <span class="crate-code">M02</span>
-                <span class="crate-name">New multiplayer game</span>
-                <div class="panels"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </a>
-        </div>
+    <div id="master" class="fullscreen">
 
-        <section class="crate bg-teal" id="guide">
-            <div class="flex-col g-1">
-                <h2>How to play</h2>
-                <ul>
-                    <li>Spin the wheel to pick a letter.</li>
-                    <li>Name a boy, girl, thing, food and place that start with it.</li>
-                    <li>Spin again every round.</li>
+
+        <!-------------------------------------------------------
+             x x x x x x x x [ Main Section ] x x x x x x x x x 
+        -------------------------------------------------------->
+
+        <section id="menu" class="fill flex-col items-center">
+
+            <!--  [ Game title here ]   -->
+            <h1 id="menuText" class="txt-regular-1 flex-col items-center-vertical">
+                <span id="menuTextBold" class="txt-color">ABC</span><br>
+                Fast or slow
+            </h1>
+
+
+
+            <!--  [ Game option Menu ]   -->
+            <div id="menuOptions" class="txt-title items-center">
+                <ul class="flex-col gap-1">
+                    <li>
+                        <a href="pages/lobby.php" class="button-classic flex-row items-center-vertical gap-1 txt-title accent-2"><img src="assets/icons/icon-new-local-light.svg" class="button-classic-icon"> New local game</a>
+                    </li>
+
+                    <li>
+                        <a href="pages/multiplayer.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-3"><img src="assets/icons/icon-join-online-light.svg" class="button-classic-icon"> Join online game</a>
+                    </li>
+
+                    <li>
+                        <a href="pages/host.php" class="button-classic  flex-row items-center-vertical gap-1 txt-title accent-4"><img src="assets/icons/icon-host-room-light.svg" class="button-classic-icon"> Host online room</a>
+                    </li>
+
+                    <li>
+                        <a href="pages/auth.php" class="button-classic flex-row items-center-vertical gap-1 txt-title accent-7"><img src="assets/icons/icon-auth-light.svg" class="button-classic-icon"> <?= $userAccount ?></a>
+                    </li>
                 </ul>
             </div>
-            <div id="guide_cards">
-                <?php $cardWidth = '7rem';
-                $cardLetter = 'M';
-                include 'includes/lcard.php'; ?>
-                <?php foreach ($categoryColors as $categoryName => $categoryColor) { ?>
-                    <div class="card mini c-<?= $categoryColor ?>">
-                        <span class="flex-col ele-center-hori card-strip"><?= $categoryName[0] ?></span>
-                        <div class="flex-col ele-center g-1 card-body">
-                            <span class="card-name"><?= $categoryName ?></span>
-                            <span class="card-ans"><?= $exampleAnswers[$categoryName] ?></span>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
+
         </section>
 
-        <section id="footer">
-            ABC Fast or Slow
-            <span> | </span>
-            <a href="pages/auth.php?mode=login">Sign in</a>
-            <span> | </span>
-            <a href="pages/auth.php?mode=register">Create account</a>
+
+        <!-------------------------------------------------------|
+             x x x x x x x x [ Decals Section ] x x x x x x x x x 
+        |-------------------------------------------------------->
+
+        <section id="decals" class="fill flex-col items-center-horizontal">
+
+            <nav class="fullscreen-width film-bar lock-top flex-row items-center">
+                <a href="pages/auth.php" class="navi">
+                    <div class="naviInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-account-dark.svg">
+                        <h2><?= $userAccountStatus ?></h2>
+                    </div>
+                </a>
+
+            </nav>
+
+            <footer class="fullscreen-width film-bar lock-bot flex-row items-center gap-2">
+                <a href="pages/guide.php" class="foot">
+                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-about-dark.svg">
+                        <h2>How to play</h2>
+                    </div>
+                </a>
+
+
+
+
+
+                <a href="pages/game.php" class="foot">
+                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-ready-blue.svg">
+                        <h2>Testing: Game</h2>
+                    </div>
+                </a>
+
+                <a href="pages/summary.php" class="foot">
+                    <div class="footInner flex-row txt-regular-4 gap-1 items-center-vertical">
+                        <img class="icon" src="assets/icons/icon-ready-green.svg">
+                        <h2>Testing: Summary</h2>
+                    </div>
+                </a>
+
+
+
+
+            </footer>
         </section>
+
 
     </div>
 </body>

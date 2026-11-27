@@ -2,6 +2,7 @@
 
     session_start();
 
+    require_once __DIR__ . '/app.php';
     require_once __DIR__. '/db.php';
     require_once __DIR__ .'/game.php';
 
@@ -16,9 +17,34 @@
     // Get the answers for this round
     $answers = get_review_answers($conn, $round_id);
 
-    // TEMPORARY: Use Player 2 for testing
-    $voter_id = 2;
+    $db = database_connection();
+    $currentUser = current_user($db);
 
+    if (!$currentUser) {
+        header('Location: ../pages/auth.php');
+        exit;
+    }
+
+   $roomPlayer = null;
+
+    if (!empty($answers)) {
+        $playerLookup = $db->prepare(
+        'SELECT id FROM room_players
+        WHERE room_id = :room_id
+        AND user_id = :user_id
+        ORDER BY id DESC
+        LIMIT 1'
+    );
+
+        $playerLookup->execute([
+            'room_id' => (int) $answers[0]['room_id'],
+            'user_id' => (int) $currentUser['id']
+        ]);
+
+        $roomPlayer = $playerLookup->fetchColumn();
+    }
+
+$voter_id = $roomPlayer ? (int) $roomPlayer : 0;
     // Handle voting
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -61,6 +87,11 @@
             <?php echo htmlspecialchars($_GET['message']); ?>
         </p>
 
+       <p>
+        <a href="../pages/game.php?room=<?php echo urlencode($_GET['room'] ?? ''); ?>&reviewed=1">
+            Return to Game
+    </a>
+</p>
     <?php endif; ?>
 
         <h2>Round <?php echo $round_id; ?></h2>

@@ -811,15 +811,17 @@ function record_submission(mysqli $conn, int $roundId, int $playerId): bool
 
         // Retrieve the players' answers and category names.
         $sql = "SELECT
-                    a.id AS answer_id,
-                    a.room_player_id,
-                    a.category_id,
-                    c.label AS category_name,
-                    a.value AS answer
-                FROM answers a
-                JOIN categories c ON a.category_id = c.id
-                WHERE a.round_id = ?
-                ORDER BY a.room_player_id, c.label";
+            a.id AS answer_id,
+            a.room_player_id,
+            a.category_id,
+            r.room_id,
+            c.label AS category_name,
+            a.value AS answer
+        FROM answers a
+        JOIN categories c ON a.category_id = c.id
+        JOIN rounds r ON a.round_id = r.id
+        WHERE a.round_id = ?
+        ORDER BY a.room_player_id, c.label";
 
         // Prepare the SQL statement.
         $stmt = mysqli_prepare($conn, $sql);

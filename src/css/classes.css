@@ -1,6 +1,10 @@
-.flex-col {
+/* - - - - - - - - - - - - - - - -
+    [ Position & Alignment ]
+ - - - - - - - - - - - - - - - - */
+
+
+.flex {
     display: flex;
-    flex-direction: column;
 }
 
 .flex-row {
@@ -8,151 +12,736 @@
     flex-direction: row;
 }
 
-.wrap {
-    flex-wrap: wrap;
-}
-
-.ele-center {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.ele-center-hori {
-    align-items: center;
-    text-align: center;
+.flex-col {
+    display: flex;
+    flex-direction: column;
 }
 
 
-.screen-full {
-    width: 100%;
-    height: 100dvh;
-}
-
-.w-page {
-    width: min(100% - 2rem, 72rem);
-    margin-inline: auto;
-}
-
-
-.g-1 {
+.gap-1 {
     gap: 1rem;
 }
 
-.g-2 {
+.gap-2 {
     gap: 2rem;
 }
 
-.g-3 {
-    gap: 3rem;
-}
-
-.p-2 {
-    padding: 2rem;
+.gap-4 {
+    gap: 4rem;
 }
 
 
-/* [ Buttons and inputs ] */
-.btn-classic {
-    display: inline-block;
+.items-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.items-center-vertical {
+    align-items: center;
+}
+
+.items-center-horizontal {
+    justify-content: center;
+}
+
+
+
+.lock-top {
+    position: fixed;
+    top: 0%;
+}
+
+.lock-bot {
+    position: fixed;
+    bottom: 0%;
+}
+
+
+/* - - - - - - - - - - - - - - - -
+        [ Size & Visibilty ]
+ - - - - - - - - - - - - - - - - */
+
+.fullscreen {
+    width: 100dvw;
+    height: 100dvh;
+}
+
+
+.fullscreen-height {
+    height: 100dvh;
+}
+
+.fullscreen-width {
+    width: 100dvw;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+
+/* - - - - - - - - - - - - - - - -
+         [  Elements  ]
+ - - - - - - - - - - - - - - - - */
+
+/* x o x     [ Buttons ]      x o x */
+
+.button-classic {
+    width: 70%;
+    height: fit-content;
+    padding-block: 0.8rem;
+    padding-left: 2rem;
+    padding-right: 5rem;
+    background-color: lightgrey;
+    color: var(--bg);
+    opacity: 0.7;
     border: none;
-    border-radius: 0.6rem;
-    padding: 1rem 1.8rem;
-    background-color: var(--wht);
-    color: var(--ink);
-    font-family: aa, Arial, Helvetica, sans-serif;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.15s, background-color 0.15s, box-shadow 0.15s;
+    text-align: center;
+    font-size: 1rem;
+    transition: margin 0.5s, transform 0.5s, scale 0.5s, box-shadow 1s, opacity 0.1s;
 }
 
-.btn-classic:hover {
-    background-color: var(--hov, var(--yel));
-    transform: translateY(-0.25rem);
-    box-shadow: 0 0.4rem 0 #0004;
+.button-classic-alt {
+    width: fit-content;
+    height: fit-content;
+    padding-block: 0.8rem;
+    padding-inline: 3rem;
+    background-color: lightgrey;
+    color: var(--bg);
+    opacity: 0.7;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    transition: margin 0.5s, transform 0.5s, scale 0.5s, box-shadow 1s, opacity 0.1s;
 }
 
-.btn-classic:active {
-    transform: translateY(0);
+
+.button-classic,
+.button-classic-alt:hover {
+    box-shadow: gray 0.5rem 0.5rem;
+    margin-block: 0.5rem;
+    transform: translateY(0.5rem);
+    scale: 95%;
+}
+
+.button-classic:active {
+    opacity: 0.3;
+}
+
+.button-classic .button-classic-icon {
+    height: 2rem;
+    width: 2rem;
+    border: none;
+}
+
+
+.button-new-player {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 2rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+.button-new-player:hover {
+    scale: 120%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.button-new-player:active {
+    scale: 90%;
+    box-shadow: none;
+    border-radius: 2rem;
+    opacity: 0.1;
+    transform: translateY(0.5rem);
+}
+
+
+
+
+
+.button-new-player-alt {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+.button-new-player-alt:hover {
+    scale: 120%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.button-new-player-alt:active {
+    scale: 90%;
+    box-shadow: none;
+    border-radius: 2rem;
+    opacity: 0.1;
+    transform: translateY(0.5rem);
+}
+
+
+.button-new-player-static {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 2rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    transform: skewX(4deg);
+}
+
+.button-new-player-status {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 2rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    transition: scale 0.2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    transform: skewX(4deg);
+}
+
+.button-new-player-status:hover {
+    scale: 105%;
+    box-shadow: none;
+    transform: skewX(0deg);
+}
+
+.button-new-player-status:active {
+    scale: 90%;
+    box-shadow: none;
+    opacity: 0.1;
+    transform: translateY(0.5rem);
+}
+
+
+
+.button-start-game {
+    border: none;
+    height: fit-content;
+    width: 20rem;
+    background: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.8rem 0.8rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    transform: skewX(15deg);
+    transition: scale 0.2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+}
+
+.button-start-game:hover {
+    scale: 105%;
     box-shadow: none;
 }
 
-.hover-red {
-    --hov: var(--red);
+.button-start-game:active {
+    scale: 90%;
+    box-shadow: none;
+    opacity: 0.1;
+    transform: translateY(0.5rem), skewX(15deg);
 }
 
-.hover-yel {
-    --hov: var(--yel);
+
+.button-start-game-text {
+    margin: 0;
+    font-size: 2rem;
+    transform: skewX(-15deg);
 }
 
-.hover-grn {
-    --hov: var(--grn);
+
+.button-reroll-small {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 0.5rem;
+    padding-block: 0.2rem;
+    border: 0.2rem var(--bg) solid;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    background-color: var(--fg);
+    text-align: center;
+    transition: scale 0.2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
 }
 
-.hover-blue {
-    --hov: var(--blue);
+.button-reroll-small:hover {
+    box-shadow: 0.5rem 0.5rem var(--bg);
 }
 
-.input-classic {
-    border: solid 0.2rem var(--wht);
-    border-radius: 0.6rem;
-    padding: 0.8rem;
-    background-color: var(--wht);
-    color: var(--ink);
-    font-family: a, Arial, Helvetica, sans-serif;
+.button-reroll-small:active {
+    scale: 90%;
+    opacity: 0.1;
+    transform: translateY(0.2rem);
+}
+
+/* x o x     [ Input ]      x o x */
+
+
+.input-text-classic {
+    border: none;
+    background: lightgray;
+    opacity: 0.8;
+    padding-block: 0.8rem;
+    width: fit-content;
+    padding-left: 1rem;
+    padding-right: 2rem;
+    transition: box-shadow 1s;
+}
+
+
+.input-text-classic:focus {
+    box-shadow: gray 0.5rem 0.5rem;
+    border: solid 0.2rem var(--a4);
+    outline: none;
+}
+
+
+.input-text-new-player {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+.input-text-new-player:hover {
+    scale: 110%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.input-text-new-player:focus {
+    border: solid 0.2rem var(--a2);
+    outline: none;
+    box-shadow: none;
+    scale: 110%;
+    border-radius: 2rem;
+}
+
+
+
+
+.input-text-new-player-alt {
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    padding-inline: 6rem;
+    padding-block: 2rem;
+    font-size: 1.5rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    border-radius: 0.2rem 0.2rem 0 0.2rem;
+    transition: scale 2s, box-shadow 0.5s, border-radius 0.2s, opacity 0.2s, tranform 0.5s;
+    background-color: var(--fg);
+}
+
+
+
+.input-text-new-player-alt:hover {
+    scale: 110%;
+    box-shadow: none;
+    border-radius: 2rem;
+}
+
+.input-text-new-player-alt:focus {
+    border: solid 0.2rem var(--bg);
+    outline: none;
+    box-shadow: none;
+    scale: 110%;
+    border-radius: 2rem;
+}
+
+
+.input-text-card {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 0.2rem var(--bg) solid;
+    width: 60%;
+    height: fit-content;
+}
+
+.input-text-card-1 {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 0.2rem var(--bg) solid;
+    width: 60%;
+    height: fit-content;
+}
+
+/* x o x     [ Cards ]      x o x */
+
+
+.card-display {
+    border: 0.5rem solid var(--bg);
+    border-bottom: 6rem solid var(--bg);
+    padding-inline: 6rem;
+    height: 20rem;
+    text-align: center;
+    line-height: 0;
+    background-color: var(--fg);
+    transition: opacity 0.1s, border 0.2s, color 0.2s, scale 0.3s, transform 0.4s;
+}
+
+
+.card-display:hover {
+    opacity: 0.9;
+    border: 0.7rem solid var(--bg);
+    border-bottom: 2rem solid var(--bg);
+    scale: 90%;
+}
+
+.card-display:active {
+    opacity: 0;
+    transform: rotateY(180deg);
+    border: 0.7rem solid var(--bg);
+}
+
+.card-display-static {
+    border: 0.5rem solid var(--bg);
+    border-bottom: 6rem solid var(--bg);
+    padding-inline: 6rem;
+    height: 20rem;
+    text-align: center;
+    line-height: 0;
+    background-color: var(--fg);
+}
+
+.card-display-alt {
+    border: 0.5rem solid var(--bg);
+    border-bottom: 2rem solid var(--bg);
+    padding-inline: 4rem;
+    padding-block: 1rem;
+    border-radius: 0 0 1rem 1rem;
+    height: 6rem;
+    text-align: center;
+    line-height: 0;
+    background-color: var(--a0);
+    background: none;
+    position: absolute;
+    top: 6%;
+}
+
+.card-small {
+    height: fit-content;
+    width: fit-content;
+    border-radius: 2rem;
+    padding-block: 5rem;
+    padding-inline: 2rem;
+}
+
+.card-small img {
+    width: fit-content;
+    height: 5rem;
+}
+
+.card-small-back-1 {
+    background: url(../../assets/backgrounds/card1.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-2 {
+    background: url(../../assets/backgrounds/card2.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-3 {
+    background: url(../../assets/backgrounds/card3.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-4 {
+    background: url(../../assets/backgrounds/card4.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-5 {
+    background: url(../../assets/backgrounds/card5.svg);
+    opacity: 0.8;
+}
+
+.card-small-back-6 {
+    background: url(../../assets/backgrounds/card6.svg);
+    opacity: 0.8;
+}
+
+.card-large {
+    height: fit-content;
+    width: fit-content;
+    border-radius: 2rem;
+    padding-block: 14rem;
+    padding-inline: 4rem;
+}
+
+.card-large img {
+    width: fit-content;
+    height: 15rem;
+}
+
+.card-large-back-1 {
+    background: url(../../assets/backgrounds/card7.svg);
+    opacity: 0.6;
+}
+
+
+
+/* x o x     [ Decals ]      x o x */
+
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.icon-label {
+    width: fit-content;
+    height: 1.5rem;
+}
+
+
+
+.film-bar {
+    background-color: var(--bg);
+    height: 4rem;
+    z-index: 10;
+}
+
+.accent-0:hover {
+    background-color: var(--a1);
+}
+
+.accent-1:hover {
+    background-color: var(--a1);
+}
+
+.accent-2:hover {
+    background-color: var(--a2);
+}
+
+.accent-3:hover {
+    background-color: var(--a3);
+}
+
+.accent-4:hover {
+    background-color: var(--a4);
+}
+
+.accent-5:hover {
+    background-color: var(--a5);
+}
+
+.accent-6:hover {
+    background-color: var(--a6);
+}
+
+
+.accent-0-border:focus {
+    border-bottom: 0.2rem solid var(--a0);
+}
+
+.accent-1-border:focus {
+    border-bottom: 0.2rem solid var(--a1);
+}
+
+.accent-2-border:focus {
+    border-bottom: 0.2rem solid var(--a2);
+}
+
+.accent-3-border:focus {
+    border-bottom: 0.2rem solid var(--a3);
+}
+
+.accent-4-border:focus {
+    border-bottom: 0.2rem solid var(--a4);
+}
+
+.accent-5-border:focus {
+    border-bottom: 0.2rem solid var(--a5);
+}
+
+.accent-6-border:focus {
+    border-bottom: 0.2rem solid var(--a6);
+}
+
+
+
+.accent-0-txt:hover {
+    color: var(--a0);
+}
+
+.accent-1-txt:hover {
+    color: var(--a1);
+}
+
+.accent-2-txt:hover {
+    color: var(--a2);
+}
+
+.accent-3-txt:hover {
+    color: var(--a3);
+}
+
+.accent-4-txt:hover {
+    color: var(--a4);
+}
+
+.accent-5-txt:hover {
+    color: var(--a5);
+}
+
+.accent-6-txt:hover {
+    color: var(--a6);
+}
+
+
+.accent-0-txt {
+    color: var(--a0);
+}
+
+.accent-1-txt {
+    color: var(--a1);
+}
+
+.accent-2-txt {
+    color: var(--a2);
+}
+
+.accent-3-txt {
+    color: var(--a3);
+}
+
+.accent-4-txt {
+    color: var(--a4);
+}
+
+.accent-5-txt {
+    color: var(--a5);
+}
+
+.accent-6-txt {
+    color: var(--a6);
+}
+
+
+.accent-0-border:hover {
+    border-bottom: 0.2rem solid var(--a0);
+}
+
+.accent-1-border:hover {
+    border-bottom: 0.2rem solid var(--a1);
+}
+
+.accent-2-border:hover {
+    border-bottom: 0.2rem solid var(--a2);
+}
+
+.accent-3-border:hover {
+    border-bottom: 0.2rem solid var(--a3);
+}
+
+.accent-4-border:hover {
+    border-bottom: 0.2rem solid var(--a4);
+}
+
+.accent-5-border:hover {
+    border-bottom: 0.2rem solid var(--a5);
+}
+
+.accent-6-border:hover {
+    border-bottom: 0.2rem solid var(--a6);
+}
+
+.accent-0-border:hover {
+    border-bottom: 0.2rem solid var(--a0);
+}
+
+.accent-1-border:hover {
+    border-bottom: 0.2rem solid var(--a1);
+}
+
+.accent-2-border:hover {
+    border-bottom: 0.2rem solid var(--a2);
+}
+
+.accent-3-border:hover {
+    border-bottom: 0.2rem solid var(--a3);
+}
+
+.accent-4-border:hover {
+    border-bottom: 0.2rem solid var(--a4);
+}
+
+.accent-5-border:hover {
+    border-bottom: 0.2rem solid var(--a5);
+}
+
+.accent-6-border:hover {
+    border-bottom: 0.2rem solid var(--a6);
+}
+
+
+.navi {
+    transition: scale 1.2s;
+}
+
+.navi:hover {
+    scale: 109%;
+}
+
+
+.naviInner {
+    color: var(--fg);
     font-size: 1rem;
 }
 
-
-/* [ Colours: crates ] */
-.bg-wht {
-    background-color: var(--wht);
-    color: var(--ink);
+.foot {
+    transition: scale 1.2s;
 }
 
-.bg-yel {
-    background-color: var(--yel);
-    color: var(--ink);
+.foot:hover {
+    scale: 109%;
 }
 
-.bg-red {
-    background-color: var(--red);
-    color: var(--wht);
-}
 
-.bg-grn {
-    background-color: var(--grn);
-    color: var(--wht);
-}
-
-.bg-teal {
-    background-color: var(--teal);
-    color: var(--wht);
-}
-
-.bg-blue {
-    background-color: var(--blue);
-    color: var(--wht);
-}
-
-/* [ Colours: cards (--c strip colour, --t strip text) ] */
-.c-red {
-    --c: var(--red);
-}
-
-.c-yel {
-    --c: var(--yel);
-    --t: var(--ink);
-}
-
-.c-grn {
-    --c: var(--grn);
-}
-
-.c-blue {
-    --c: var(--blue);
-}
-
-.c-plum {
-    --c: var(--plum);
+.footInner {
+    color: var(--fg);
+    font-size: 1rem;
 }

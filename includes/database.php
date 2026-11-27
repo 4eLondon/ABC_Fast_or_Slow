@@ -14,7 +14,8 @@ function database_connection(): PDO
     $databaseName = getenv('DB_NAME') ?: 'abc_fast_or_slow';
     $databaseUser = getenv('DB_USER') ?: 'root';
     $password = getenv('DB_PASS');
-    $password = $password === false ? '' : $password;
+    $password = $password === false ? '123' : $password;
+
 
     $dsn = "mysql:host={$host};port={$port};dbname={$databaseName};charset=utf8mb4";
     $connection = new PDO($dsn, $databaseUser, $password, [

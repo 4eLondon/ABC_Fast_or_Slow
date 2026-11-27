@@ -1,0 +1,92 @@
+/* - - - - - - - - - - - - - - - -
+        [ Auth page ]
+ - - - - - - - - - - - - - - - - */
+#master {
+    background-image: url(../../assets/backgrounds/bg6.svg);
+    background-size: 60% 100%;
+    background-repeat: repeat;
+    animation: bg 30s linear infinite;
+}
+
+
+/* Assist Here */
+
+@keyframes bg {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -100vw -90vh;
+    }
+}
+
+
+@keyframes spin {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+
+}
+
+.spin {
+    animation: spin 60s ease infinite;
+}
+
+
+#tip {
+    position: absolute;
+    bottom: 10%;
+    font-size: 1.2rem;
+}
+
+#scoreCard {
+    position: absolute;
+    left: 10%;
+    bottom: 12%;
+}
+
+
+#hero {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    z-index: 2;
+    opacity: 0.9;
+    bottom: 10%;
+    right: 2%;
+}
+
+.hero-text {
+    font-size: 4rem;
+    animation: txt 5s ease infinite;
+}
+
+
+
+
+#cardGuide {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+
+#letter {
+    font-size: 8rem;
+    color: var(--a1);
+}
+
+#button_submit_key {
+    height: fit-content;
+    width: fit-content;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+    border: 0.3rem var(--bg) solid;
+    box-shadow: var(--bg) 0.5rem 0.5rem;
+    font-size: 1rem;
+}

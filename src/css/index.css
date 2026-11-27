@@ -1,0 +1,50 @@
+/* - - - - - - - - - - - - - - - -
+        [ Index page ]
+ - - - - - - - - - - - - - - - - */
+#master {
+    background-image: url(../../assets/backgrounds/bg1.svg);
+    background-size: auto 100%;
+    background-repeat: repeat;
+    animation: bg 60s linear infinite;
+}
+
+
+/* Assist Here */
+@keyframes bg {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -100vw -40vh;
+    }
+}
+
+
+#menuText {
+    font-size: 4rem;
+    margin-bottom: 0;
+}
+
+#menuTextBold {
+    font-size: 8rem;
+    line-height: 8rem;
+}
+
+#guide {
+    margin-top: 4%;
+}
+
+#howtoBanner {
+    margin: 0;
+}
+
+#menuTextBoldAlt {
+    font-size: 5rem;
+    line-height: 8rem;
+}
+
+#menuTextAlt {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
